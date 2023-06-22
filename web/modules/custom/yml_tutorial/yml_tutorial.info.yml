@@ -1,0 +1,9 @@
+name: Yml Tutorial
+type: module
+package: Custom Module
+description: 'Simple Custom Module'
+core_version_requirement: 10.x
+
+dependencies:
+  - drupal:link
+  - drupal:views
