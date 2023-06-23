@@ -65,7 +65,9 @@ class ConfigForm extends ConfigFormBase {
 
      return $form;
   }
-
+  /**
+   * {@inheritDoc}
+   */
   public function validateForm(array &$form, FormFormStateInterface $form_state) {
     $formField = $form_state->getValues();
     $phoneNumber = trim($formField['PhoneNumber']);
