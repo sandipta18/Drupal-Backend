@@ -1,0 +1,6 @@
+name: Hook Tutorial
+type: module
+package: Custom module
+core_version_requirement: 10.x
+description: Custom Hook Tutorial
+configure: customhook.overview
