@@ -23,7 +23,7 @@ class DynamicPermissions
   {
     $permissions = [];
 
-    // We will just generate 5 sample permissions. You can have any logic here.
+    //Generating 5 permmissions 
     $count = 1;
     while ($count <= 5) {
       $permissions += [
