@@ -1,0 +1,22 @@
+
+# Drupal Simple Form Demo
+
+Form.simpleForm:
+  path: '/form'
+  defaults:
+    _form: '\Drupal\configform\Form\SimpleForm'
+    _title: 'Simple Form'
+  requirements:
+    _permission: 'simple custom form permission'
+
+
+#Drupal Config Form Demo
+
+Form.configForm:
+  path: '/admin/config/form'
+  defaults:
+    _form: '\Drupal\configform\Form\ConfigForm'
+    _title: 'Config Form'
+  requirements:
+    _permission: 'custom permission'
+

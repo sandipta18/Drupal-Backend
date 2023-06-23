@@ -1,0 +1,4 @@
+custom permission:
+  title: 'Custom Permission'
+  description: 'Display Username'
+  restrict access: True
