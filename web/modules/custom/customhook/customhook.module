@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
 /**
  * Implements hook_cron()
@@ -24,16 +26,16 @@ function customhook_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
 }
 
 /**
- * Implements hook_custom_hook_incremented
- *
+ * Implements custom_hook_incremented
+ * This functions displays a message when a node is viewed for the first time
  * @param int $current_count
  * @param \Drupal\node\NodeInterface $node
  *
  */
-function hook_custom_hook_incremented($current_count, \Drupal\node\NodeInterface $node) {
+function customhook_incremented($current_count, \Drupal\node\NodeInterface $node) {
   if ($current_count == 1) {
-    \Drupal::messenger()->addMessage('This is the first time you have viewed the
-     node %title. ', ['%title' => $node->label()]);
+    \Drupal::messenger()->addMessage(t('This is the first time you have viewed the
+     node %title. ', ['%title' => $node->label()]));
   }
 }
 
@@ -46,7 +48,7 @@ function hook_custom_hook_incremented($current_count, \Drupal\node\NodeInterface
  * @return array
  *
  */
-function customhook_node_view(array &$build, EntityInterface $entity) {
+function customhook_node_view(array &$build, EntityInterface $entity, EntityViewDisplay $display, $view_mode) {
   $session = \Drupal::request()->getSession();
   $current_counts = $session->get('customhook.view_counts', array());
   if (!isset($current_counts[$entity->id()])) {
@@ -56,7 +58,7 @@ function customhook_node_view(array &$build, EntityInterface $entity) {
   }
   $session->set('customhook.view_counts', $current_counts);
   $module_handler = \Drupal::moduleHandler();
-  $module_handler->invokeAll('hook_custom_hook_incremented',
+  $module_handler->invokeAll('incremented',
   array($current_counts[$entity->id()], $entity));
   $build['view_count'] = array(
     '#markup' => '<p>' . t('You have viewed this node @total times this session.',
