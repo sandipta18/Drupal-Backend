@@ -10,7 +10,7 @@
  * @param \Drupal\node\NodeInterface $node
  * The node being viewed
  */
-function hook_custom_hook_incremented($current_count, \Drupal\node\NodeInterface $node) {
+function customhook_incremented($current_count, \Drupal\node\NodeInterface $node) {
   if($current_count == 1) {
     \Drupal::messenger()->addMessage('This is the first time you have viewed the node %title. ',['%title' => $node->label()]);
   }
