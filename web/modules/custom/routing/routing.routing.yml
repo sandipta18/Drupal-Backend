@@ -5,4 +5,3 @@ route.routing:
     _title: Custom Route
   requirements:
     _permission: 'routing permission'
-
