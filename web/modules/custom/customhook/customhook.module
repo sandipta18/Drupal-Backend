@@ -2,12 +2,13 @@
 
 /**
  * @file
- * This file demonstrates  how to use hook function
+ * This file demonstrates how to use hook function
  */
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_cron()
@@ -19,7 +20,7 @@ function customhook_cron() {
 /**
  * Implements hook_form_alter()
  */
-function customhook_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function customhook_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == 'node_article_edit_form') {
     $form['actions']['submit']['#value'] = t('Save your work');
   }
@@ -59,7 +60,7 @@ function customhook_node_view(array &$build, EntityInterface $entity, EntityView
   $session->set('customhook.view_counts', $current_counts);
   $module_handler = \Drupal::moduleHandler();
   $module_handler->invokeAll('incremented',
-  array($current_counts[$entity->id()], $entity));
+  [$current_counts[$entity->id()], $entity]);
   $build['view_count'] = array(
     '#markup' => '<p>' . t('You have viewed this node @total times this session.',
     array('@total' => $current_counts[$entity->id()])) . '</p>',
