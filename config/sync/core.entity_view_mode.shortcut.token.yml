@@ -1,0 +1,10 @@
+uuid: badfb934-51d2-4ba7-8ab0-34551715362e
+langcode: en
+status: true
+dependencies:
+  module:
+    - shortcut
+id: shortcut.token
+label: Token
+targetEntityType: shortcut
+cache: true
