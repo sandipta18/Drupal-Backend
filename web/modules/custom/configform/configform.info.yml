@@ -1,7 +1,7 @@
 name: Config Form
 type: module
 package: Custom Module
-description: Simple Config Form
+description: Simple Config Form with three fields 
 core_version_requirement: 10.x
 version: ^10
 configure: Form.configForm

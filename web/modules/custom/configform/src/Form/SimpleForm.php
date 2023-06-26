@@ -4,11 +4,23 @@ namespace Drupal\configform\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Base form for taking user information.
+ *
+ * @internal
+ */
 class SimpleForm extends FormBase {
+
+  /**
+   * {@inheritDoc}
+   */
   public function getFormId() {
      return 'config_form_id';
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
      $form['email'] = array(
@@ -42,6 +54,9 @@ class SimpleForm extends FormBase {
      return $form;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::messenger()->addMessage(t('Submitted Succesfully'));
   }

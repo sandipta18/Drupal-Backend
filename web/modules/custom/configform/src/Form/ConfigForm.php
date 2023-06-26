@@ -9,11 +9,17 @@ use Drupal\Core\Entity\Message;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
 
+/**
+ * Config form to take user information .
+ *
+ * @internal
+ */
 class ConfigForm extends ConfigFormBase {
 
-
-  public function getFormId()
-  {
+  /**
+   * {@inheritDoc}
+   */
+  public function getFormId() {
     return 'config_form';
   }
 
@@ -25,7 +31,6 @@ class ConfigForm extends ConfigFormBase {
       'config.settings'
      ];
   }
-
 
   /**
    * {@inheritDoc}
@@ -84,7 +89,6 @@ class ConfigForm extends ConfigFormBase {
         $form_state->setErrorByName('Email',$this->t('Allowed domains are gmail,yahoo and outlook'));
       }
     }
-
     if(!preg_match("/^[+]?[1-9][0-9]{9,14}$/",$phoneNumber) or strlen($phoneNumber) > 10) {
       $form_state->setErrorByName($phoneNumber,$this->t('Enter Valid Number'));
     }
@@ -101,7 +105,6 @@ class ConfigForm extends ConfigFormBase {
     $config->set('custom.number',$form_state->getValue('PhoneNumber'));
     $config->set('custom.gender', $form_state->getValue('Gender'));
     $config->save();
-    \Drupal::messenger()->addMessage(t('Submitted Succesfully'));
     return parent::submitForm($form,$form_state);
 
 
