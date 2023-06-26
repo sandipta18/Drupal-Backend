@@ -16,198 +16,187 @@ use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
  *
  * @internal
  */
-class ConfigForm extends ConfigFormBase
-{
+class ConfigForm extends ConfigFormBase {
 
   /**
-   * This variable will be used to display the error message
+   * Generating a unique form id
    *
-   * @var string $errorMessage
+   * @return string
+   *   Unique form id
    */
-  private string $errorMessage = "";
-
-  /**
-   * This variable will be used to mark the validation of phone number
-   *
-   * @var boolean $phoneValidate
-   */
-  private bool $phoneValidate = TRUE;
-
-  /**
-   * This variable will be used to mark the validation of Email ID
-   *
-   * @var boolean $emailValidate
-   */
-  public bool $emailValidate = TRUE;
-
-  /**
-   * {@inheritDoc}
-   */
-  public function getFormId()
-  {
+  public function getFormId() {
     return 'config_form';
   }
 
+
   /**
-   * {@inheritDoc}
+   * This function is used to declare the type of form
+   *
+   * @return array
+   *   It stores the config form
    */
-  protected function getEditableConfigNames()
-  {
+  protected function getEditableConfigNames() {
     return [
       'config.settings'
     ];
   }
 
+
   /**
-   * {@inheritDoc}
+   * This function will faciliate building the form
+   *
+   * @param array $form
+   *   This array contains all the fields in an associative array format
+   * @param FormFormStateInterface $form_state
+   *   This variable stores the current state of the form
+   *
+   * @return array
+   *   Array containing all the form field and data
+   *
    */
-  public function buildForm(array $form, FormFormStateInterface $form_state)
-  {
-    $config = $this->config('config.settings');
+  public function buildForm(array $form, FormFormStateInterface $form_state) {
     $form['error'] = array(
-      '#type' => 'markup',
-      '#markup' => '<div id="error-message"></div>',
+      '#type'      => 'markup',
+      '#markup'    => '<div id="error-message"></div>',
     );
     $form['FullName'] = array(
-      '#title' => t('Full Name'),
-      '#type' => 'textfield',
+      '#title'    => t('Full Name'),
+      '#type'     => 'textfield',
       '#required' => TRUE,
-      '#size' => 30
+      '#size'     => 30
     );
     $form['PhoneNumber'] = array(
-      '#title' => t('Phone Number'),
-      '#type' => 'number',
+      '#title'    => t('Phone Number'),
+      '#type'     => 'number',
       '#required' => TRUE,
-      '#size' => 10,
-      '#ajax' => array(
-        'callback' => [$this, 'validateNumberCallback'],
-        'event' => 'change'
-      )
+      '#size'     => 10,
+      '#suffix'   => '<span id="phone_error>'
     );
     $form['Email'] = array(
-      '#title' => t('Email'),
-      '#type' => 'email',
+      '#title'    => t('Email'),
+      '#type'     => 'email',
       '#required' => TRUE,
-      '#ajax' => [
-        'callback' => [$this, 'validateEmailCallback'],
-        'event' => 'change'
-      ]
     );
     $form['Gender'] = array(
-      '#type' => 'radios',
-      '#title' => t('Gender'),
-      '#options' => array(
+      '#type'     => 'radios',
+      '#title'    => t('Gender'),
+      '#options'  => array(
         t('Male'),
         t('Female')
       )
     );
-    $form['Submit'] = array(
-      '#title' => 'submit',
-      '#type' => 'submit',
-      '#value' => $this->t('Submit'),
-      '#ajax' => array(
-        'callback' => '::submitData',
+    $form['action']['submit'] = array(
+      '#type'     => 'submit',
+      '#value'    => $this->t('submit'),
+      '#ajax'     => array(
+       'callback' => '::submitDataAjax',
       )
     );
     $form['success'] = array(
-      '#type' => 'markup',
-      '#markup' => '<div class="success"></div>',
+      '#type'     => 'markup',
+      '#markup'   => '<div class="success"></div>',
     );
+
     return $form;
   }
 
   /**
-   * This function is used to facilitate client side validation of the Email ID
-   * entered by user .
+   * This function is used to perform validation on the data entered by user
    *
    * @param array $form
+   *   This array contains all the form field in an associative array format
    * @param FormFormStateInterface $form_state
+   *   This array holds the current state of the form with input data
    *
-   * @return array
+   * @return void
    */
-  public function validateEmailCallback(array &$form, FormFormStateInterface $form_state)
-  {
-    $response = new AjaxResponse();
-    $email = $form_state->getValue('Email');
-    $allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com'];
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $parts = explode('@', $email);
-      $domain = array_pop($parts);
-      if (!in_array($domain, $allowedDomains)) {
-        $response->addCommand(new HtmlCommand('.success', 'Allowed domains are gmail, yahoo, and outlook'));
-        $this->errorMessage = 'Allowed domains are gmail, yahoo, and outlook';
-        $this->emailValidate = FALSE;
-      }
-    } else {
-      $response->addCommand(new HtmlCommand('#error-message', 'Invalid email format'));
-      $this->errorMessage = 'Invalid Email Format';
-      $this->emailValidate = FALSE;
-    }
-    return $response;
-  }
-
-  /**
-   * This function is used to facilitate cliend side validation of the Phone
-   * Number entered by user
-   *
-   * @param array $form
-   * @param FormFormStateInterface $form_state
-   *
-   * @return array
-   */
-  public function validateNumberCallback(array &$form, FormFormStateInterface $form_state)
-  {
-    $response = new AjaxResponse();
-    $number = $form_state->getValue('PhoneNumber');
-    if (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $number) or strlen($number) > 10) {
-      $response->addCommand(new HtmlCommand('#error-message', 'Invalid Phone Number Format'));
-      $this->phoneValidate =  FALSE;
-      $this->errorMessage = 'Invalid Phone Number';
-    }
-    return $response;
+  public function validateForm(array &$form, FormFormStateInterface $form_state) {
+    \Drupal::messenger()->addMessage($this->validate($form_state));
   }
 
   /**
    * This function is used to facilitate form submission without page refresh .
    *
    * @param array $form
+   *   This array contains all the form field in an associative array format
    * @param FormFormStateInterface $form_state
+   *   This array holds the current state of the form with input data
    *
-   * @return array
+   * @return Response
+   *   Ajax response based on the validation
    */
-  public function submitData(array &$form, FormFormStateInterface $form_state)
-  {
+  public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
+
+    // Initializing the response
     $ajax_response = new AjaxResponse();
-    $ajax_response->addCommand(new HtmlCommand('.success', 'Form Submitted Succesfully thanks'));
+
+    // Calling the validate function to validate data
+    $output = $this->validate($form_state);
+
+    if ($output === TRUE) {
+
+      // If validation is succesful showing the success message
+      $message = $this->t('Thanks for submitting the form');
+      $ajax_response->addCommand(new HtmlCommand('.success', $message));
+    } else {
+
+      // If validatiion failed showing the error message
+      $ajax_response->addCommand(new HtmlCommand('#error-message', $output));
+    }
+
+    // Deleting all messages after process is completed
+    \Drupal::messenger()->deleteAll();
     return $ajax_response;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public function validateForm(array &$form, FormFormStateInterface $form_state)
-  {
-    $validateEmail = $this->validateEmailCallback($form, $form_state);
-    $validatePhone = $this->validateNumberCallback($form, $form_state);
-    if ($this->emailValidate == FALSE) {
-      $form_state->setErrorByName('Email', $this->t('Allowed domains are gmail,yahoo and outlook'));
-    }
-    if ($this->phoneValidate == FALSE) {
-      $form_state->setErrorByName('PhoneNumber', $this->t('Invalid Phone Number'));
-    }
-  }
 
   /**
-   *{@inheritDoc}
+   * This function is used to facilitate the validation of data entered by user
+   *
+   * @param FormFormStateInterface $form_state
+   *   Holds the form state along with the input data
+   *
+   * @return mixed
+   *   On succesful validation return boolean value
+   *   else return error message
    */
-  public function submitForm(array &$form, FormFormStateInterface $form_state)
-  {
-    $config = $this->config('config.settings');
-    $config->set('custom.name', $form_state->getValue('FullName'));
-    $config->set('custom.email', $form_state->getValue('Email'));
-    $config->set('custom.number', $form_state->getValue('PhoneNumber'));
-    $config->set('custom.gender', $form_state->getValue('Gender'));
-    \Drupal::messenger()->addMessage($this->t('Form Submitted Succesfully'));
-    $config->save();
+  public function validate(FormFormStateInterface $form_state) {
+    
+    // Storing the phone number in a variable
+    $phoneNumber = $form_state->getValue('PhoneNumber');
+
+    // Storing the email id in a variable
+    $email    = $form_state->getValue('Email');
+
+    // Listing the available domains
+    $allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com'];
+
+    // Exploding the array so now we have the data in this format
+    // if email = 'example.com'
+    // Array ( [0] => example [1] => gmail.com )
+    $parts = explode('@', $email);
+
+    // Pop function removes the last element from an array
+    $domain = array_pop($parts);
+
+    // Validating based on conditions
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+      return $this->t('Invalid Email Format');
+    } elseif (!in_array($domain, $allowedDomains)) {
+
+      return $this->t('Email ID should belong to gmail, yahoo or outlook');
+    } elseif (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $phoneNumber) or strlen($phoneNumber) > 10) {
+
+      return $this->t('Invalid Phone Number');
+    } elseif (empty($form_state->getValue('FullName'))) {
+
+      return $this->t('Gender should not be empty');
+    } elseif (empty($form_state->getValue('Gener'))) {
+
+      return $this->t('Gender should not be empty');
+    }
+
+    return TRUE;
   }
 }

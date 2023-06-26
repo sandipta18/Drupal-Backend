@@ -15,49 +15,61 @@ use Drupal\Core\Database\Database;
  */
 class SimpleForm extends FormBase {
 
-  /**
-   * {@inheritDoc}
-   */
+ /**
+  * Generating Unique Form ID
+  *
+  * @return string
+  *   Unique Form ID
+  */
   public function getFormId() {
      return 'config_form_id';
   }
 
+
   /**
-   * {@inheritDoc}
+   * This function will faciliate building the form
+   *
+   * @param array $form
+   *   It contains all the fields in an associative array format
+   * @param FormStateInterface $form_state
+   *   Holds the current state of the form
+   *
+   * @return array
+   *   Array containg form data along with fields
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['element'] = [
-      '#type' => 'markup',
+      '#type'   => 'markup',
       '#markup' => "<div class='success'></div>"
     ];
 
      $form['email'] = array(
-      '#title' => t('Email Address'),
-      '#type' => 'email',
-      '#required' => TRUE,
-      '#size' => 25,
+      '#title'       => t('Email Address'),
+      '#type'        => 'email',
+      '#required'    => TRUE,
+      '#size'        => 25,
       '#description' => 'User Email Field'
      );
 
      $form['name'] = array(
-       '#title' => t('Name'),
-       '#type' => 'textfield',
-       '#required' => TRUE,
-       '#size' => 25,
+       '#title'       => t('Name'),
+       '#type'        => 'textfield',
+       '#required'    => TRUE,
+       '#size'        => 25,
        '#description' => 'User Name Field'
      );
 
       $form['password'] = array(
-       '#type' => 'password',
-       '#title' => t('Password'),
+       '#type'     => 'password',
+       '#title'    => t('Password'),
        '#required' => TRUE
       );
 
      $form['submit'] = array(
-       '#title' => 'submit',
-       '#type' => 'submit',
-       '#value' => $this->t('submit'),
-       '#ajax' => [
+       '#title'      => 'submit',
+       '#type'       => 'submit',
+       '#value'      => $this->t('submit'),
+       '#ajax'       => [
           'callback' => '::submitData',
        ]
      );
@@ -70,9 +82,12 @@ class SimpleForm extends FormBase {
    * This function facilitates submissions of form without browser refresh .
    *
    * @param array $form
+   *   It conains all the fields in an associative array format
    * @param FormStateInterface $form_state
+   *   It holds the current state of the form along with the data
    *
-   * @return array
+   * @return Response
+   *   Ajax Response
    */
   public function submitData(array &$form , FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
@@ -80,15 +95,23 @@ class SimpleForm extends FormBase {
     return ($ajax_response);
   }
 
+
   /**
-   * {@inheritDoc}
+   * This functions stores the data inside a database
+   *
+   * @param array $form
+   *   It contains the fields in an associative array format
+   * @param FormStateInterface $form_state
+   *   It holds the current state of the form
+   *
+   * @return void
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::messenger()->addMessage(t('Submitted Succesfully'));
     $values = $form_state->getValues();
     \Drupal::database()->insert('configform_example')->fields([
-      'email' => $values['email'],
-      'name' =>  $values['name'],
+      'email'    => $values['email'],
+      'name'     =>  $values['name'],
       'password' => md5($values['password'])
     ])->execute();
   }
