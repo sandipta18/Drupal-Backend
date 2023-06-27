@@ -18,7 +18,7 @@ class MultidataRoute extends ControllerControllerBase {
     */
    public function multiRoute($data) {
       return [
-        '#type' => 'markup',
+        '#type'   => 'markup',
         '#markup' => t('Hi @value',[
          '@value' => $data])
       ];

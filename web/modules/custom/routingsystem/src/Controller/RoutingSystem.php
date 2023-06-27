@@ -53,9 +53,9 @@ class RoutingSystem extends ControllerBase {
     // Fetching the user name of the currently
     $userName = $this->account->getDisplayName();
     return [
-      '#type' => 'markup',
+      '#type'   => 'markup',
       '#markup' => $this->t('Hello @user',[
-        '@user'=>$userName
+        '@user' =>$userName
       ])
     ];
   }
@@ -64,7 +64,7 @@ class RoutingSystem extends ControllerBase {
   /**
    * This function will be used to determine whether the access request should
    * be accepted or denied
-   * 
+   *
    * @return object
    *   Instance of the access result class
    */
