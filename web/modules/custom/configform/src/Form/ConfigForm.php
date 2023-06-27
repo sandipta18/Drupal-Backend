@@ -81,8 +81,8 @@ class ConfigForm extends ConfigFormBase {
       '#type'     => 'radios',
       '#title'    => t('Gender'),
       '#options'  => array(
-        t('Male'),
-        t('Female')
+         'male' => t('Male'),
+         'female' => t('Female'),
       )
     );
     $form['action']['submit'] = array(
@@ -161,7 +161,7 @@ class ConfigForm extends ConfigFormBase {
    *   else return error message
    */
   public function validate(FormFormStateInterface $form_state) {
-    
+
     // Storing the phone number in a variable
     $phoneNumber = $form_state->getValue('PhoneNumber');
 
@@ -192,7 +192,7 @@ class ConfigForm extends ConfigFormBase {
     } elseif (empty($form_state->getValue('FullName'))) {
 
       return $this->t('Gender should not be empty');
-    } elseif (empty($form_state->getValue('Gener'))) {
+    } elseif (empty($form_state->getValue('Gender'))){
 
       return $this->t('Gender should not be empty');
     }
