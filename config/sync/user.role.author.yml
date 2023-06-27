@@ -55,7 +55,6 @@ permissions:
   - 'delete terms in recipe_category'
   - 'delete terms in tags'
   - 'dynamic permission 2'
-  - 'dynamic permission 5'
   - 'edit own article content'
   - 'edit own page content'
   - 'edit own recipe content'

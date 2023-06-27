@@ -1,7 +1,6 @@
-name: Config Form
+name: Form Tutorial
 type: module
 package: Custom Module
-description: Simple Config Form
+description: Form Api Tutorial
 core_version_requirement: 10.x
-version: ^10
 configure: Form.configForm
