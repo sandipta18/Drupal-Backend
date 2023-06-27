@@ -46,9 +46,14 @@ class RoutingController extends ControllerBase {
     $userName = $this->account->getDisplayName();
     return [
       '#type' => 'markup',
-      '#markup' => $this->t('Hello @userName', [
-        '@userName' => $userName,
-      ]),
+      '#markup' => t(
+        'Hello @userName',
+        ['@userName' => $userName]
+      ),
+      '#cache' => [
+        'tags' => ['node_list'],
+        'contexts' => ['user']
+      ]
     ];
   }
 }
