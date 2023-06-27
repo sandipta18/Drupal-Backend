@@ -1,0 +1,5 @@
+services:
+  routingsystem.change_route:
+    class: Drupal\routingsystem\Routing\AlterRoute
+    tags:
+      -  { name: 'event_subscriber' }

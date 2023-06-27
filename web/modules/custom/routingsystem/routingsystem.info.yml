@@ -2,5 +2,7 @@ name: Routing System
 type: module
 package: Custom Module
 core_version_requirement: 10.x
-description: 'Advanced Routing Tutorial'
+description: 'This module will is based on the understanding of topics like
+Structure of Routing , Altering Routes , Parameters in routes,
+Providing dynamic routes , Providing access checks on routes'
 
