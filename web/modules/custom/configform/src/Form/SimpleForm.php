@@ -91,8 +91,17 @@ class SimpleForm extends FormBase {
    */
   public function submitData(array &$form , FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    $ajax_response->addCommand(new HtmlCommand('.success','Form Submitted Succesfully'));
-    return ($ajax_response);
+    $values = $form_state->getValues();
+
+    \Drupal::database()->insert('configform_example')->fields([
+      'email'    => $values['email'],
+      'name'     => $values['name'],
+      'password' => md5($values['password']),
+    ])->execute();
+
+    $ajax_response->addCommand(new HtmlCommand('.success', 'Form Submitted Successfully'));
+
+    return $ajax_response;
   }
 
 
@@ -107,13 +116,9 @@ class SimpleForm extends FormBase {
    * @return void
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    \Drupal::messenger()->addMessage(t('Submitted Succesfully'));
-    $values = $form_state->getValues();
-    \Drupal::database()->insert('configform_example')->fields([
-      'email'    => $values['email'],
-      'name'     =>  $values['name'],
-      'password' => md5($values['password'])
-    ])->execute();
+    $response = $this->submitData($form,$form_state);
+    \Drupal::messenger()->addMessage($this->t('Form submitted successfully'));
+    return $response;
   }
 
 }
