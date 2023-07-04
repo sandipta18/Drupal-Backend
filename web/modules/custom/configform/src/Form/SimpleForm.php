@@ -7,13 +7,42 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Base form for taking user information.
- *
- * @internal
+ * Implements simpleform
  */
 class SimpleForm extends FormBase {
+
+
+  /**
+   * @var MessengerInterface $messenger
+   *   Instance of MessengerInterface
+   */
+  protected $messenger;
+
+  /**
+   * The injected dependancy is assigned to the corresponding class property
+   * @param MessengerInterface $messenger
+   *   Instance of MessengerInterface
+   */
+  public function __construct(MessengerInterface $messenger) {
+    $this->messenger = $messenger;
+  }
+
+  /**
+   * @param ContainerInterface $container
+   *   Dependancy injector Interface Container
+   *
+   * @return object
+   *   Returns newly created instance of the class
+   */
+  public static function create(ContainerInterface $container) {
+    return new static (
+       $container->get('messenger')
+    );
+  }
 
  /**
   * Generating Unique Form ID
@@ -91,8 +120,14 @@ class SimpleForm extends FormBase {
    */
   public function submitData(array &$form , FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    $ajax_response->addCommand(new HtmlCommand('.success','Form Submitted Succesfully'));
-    return ($ajax_response);
+    $values = $form_state->getValues();
+    \Drupal::database()->insert('configform_example')->fields([
+      'email'    => $values['email'],
+      'name'     => $values['name'],
+      'password' => md5($values['password']),
+    ])->execute();
+    $ajax_response->addCommand(new HtmlCommand('.success', 'Form Submitted Successfully'));
+    return $ajax_response;
   }
 
 
@@ -107,13 +142,9 @@ class SimpleForm extends FormBase {
    * @return void
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    \Drupal::messenger()->addMessage(t('Submitted Succesfully'));
-    $values = $form_state->getValues();
-    \Drupal::database()->insert('configform_example')->fields([
-      'email'    => $values['email'],
-      'name'     =>  $values['name'],
-      'password' => md5($values['password'])
-    ])->execute();
+    $response = $this->submitData($form,$form_state);
+    $this->messenger->addMessage($this->t('Form submitted successfully'));
+    return $response;
   }
 
 }

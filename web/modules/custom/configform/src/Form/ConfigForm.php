@@ -2,6 +2,7 @@
 
 namespace Drupal\configform\Form;
 
+use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupall\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Database;
@@ -10,6 +11,8 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as DependencyInjectionContainerInterface;
 
 /**
  * Config form to take user information .
@@ -17,6 +20,35 @@ use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
  * @internal
  */
 class ConfigForm extends ConfigFormBase {
+
+  /**
+   * @var MessengerInterface $messenger
+   *   Class Property of messenger interface
+   */
+  protected $messenger;
+
+  /**
+   * The injected dependancy is assigned to the corresponding class propery
+   *
+   * @param MessengerInterface $messenger
+   *   Class property of messenger interface
+   */
+  public function __construct(MessengerInterface $messenger) {
+    $this->messenger = $messenger;
+  }
+
+ /**
+  * @param DependencyInjectionContainerInterface $container
+  *   Dependnacy injector Interface Container
+  *
+  * @return object
+  *   Returns newly created instance of the class
+  */
+ public static function create(DependencyInjectionContainerInterface $container) {
+    return new static (
+      $container->get('messenger')
+    );
+ }
 
   /**
    * Generating a unique form id
@@ -111,7 +143,7 @@ class ConfigForm extends ConfigFormBase {
    * @return void
    */
   public function validateForm(array &$form, FormFormStateInterface $form_state) {
-    \Drupal::messenger()->addMessage($this->validate($form_state));
+    $this->messenger()->addMessage($this->validate($form_state));
   }
 
   /**
@@ -145,7 +177,7 @@ class ConfigForm extends ConfigFormBase {
     }
 
     // Deleting all messages after process is completed
-    \Drupal::messenger()->deleteAll();
+    $this->messenger()->deleteAll();
     return $ajax_response;
   }
 
