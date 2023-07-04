@@ -9,7 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * Implements simpleform
  */
@@ -23,12 +23,16 @@ class SimpleForm extends FormBase {
   protected $messenger;
 
   /**
-   * The injected dependancy is assigned to the corresponding class property
-   * @param MessengerInterface $messenger
-   *   Instance of MessengerInterface
+   * Constructs a new SimpleForm object.
+   *
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger service.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
    */
-  public function __construct(MessengerInterface $messenger) {
+  public function __construct(MessengerInterface $messenger, RequestStack $request_stack) {
     $this->messenger = $messenger;
+    $this->requestStack = $request_stack;
   }
 
   /**
@@ -40,7 +44,8 @@ class SimpleForm extends FormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static (
-       $container->get('messenger')
+       $container->get('messenger'),
+       $container->get('request_stack')
     );
   }
 
@@ -142,9 +147,14 @@ class SimpleForm extends FormBase {
    * @return void
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $response = $this->submitData($form,$form_state);
-    $this->messenger->addMessage($this->t('Form submitted successfully'));
-    return $response;
+    // Checking whether the form is being submitted with ajax previously
+    $request = $this->requestStack->getCurrentRequest();
+    if (!$request->isXmlHttpRequest()) {
+      // This is the regular form submission, so saving the data to the database.
+      $response = $this->submitData($form, $form_state);
+      $this->messenger->addMessage($this->t('Form submitted successfully'));
+      return $response;
+    }
   }
 
 }
