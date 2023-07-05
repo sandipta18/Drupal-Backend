@@ -143,7 +143,7 @@ class ConfigForm extends ConfigFormBase {
     } else {
 
       // If validatiion failed showing the error message
-      $ajax_response->addCommand(new CssCommand('.success', ['color' => 'red']));
+      $ajax_response->addCommand(new CssCommand('#error-message', ['color' => 'red']));
       $ajax_response->addCommand(new HtmlCommand('#error-message', $output));
     }
 
