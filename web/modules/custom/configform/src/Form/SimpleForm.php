@@ -10,10 +10,15 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * Implements simpleform
  */
-class SimpleForm extends FormBase {
+class SimpleForm extends FormBase
+{
 
 
   /**
@@ -30,7 +35,8 @@ class SimpleForm extends FormBase {
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
    */
-  public function __construct(MessengerInterface $messenger, RequestStack $request_stack) {
+  public function __construct(MessengerInterface $messenger, RequestStack $request_stack)
+  {
     $this->messenger = $messenger;
     $this->requestStack = $request_stack;
   }
@@ -42,21 +48,23 @@ class SimpleForm extends FormBase {
    * @return object
    *   Returns newly created instance of the class
    */
-  public static function create(ContainerInterface $container) {
-    return new static (
-       $container->get('messenger'),
-       $container->get('request_stack')
+  public static function create(ContainerInterface $container)
+  {
+    return new static(
+      $container->get('messenger'),
+      $container->get('request_stack')
     );
   }
 
- /**
-  * Generating Unique Form ID
-  *
-  * @return string
-  *   Unique Form ID
-  */
-  public function getFormId() {
-     return 'config_form_id';
+  /**
+   * Generating Unique Form ID
+   *
+   * @return string
+   *   Unique Form ID
+   */
+  public function getFormId()
+  {
+    return 'config_form_id';
   }
 
 
@@ -71,44 +79,45 @@ class SimpleForm extends FormBase {
    * @return array
    *   Array containg form data along with fields
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state)
+  {
     $form['element'] = [
       '#type'   => 'markup',
       '#markup' => "<div class='success'></div>"
     ];
 
-     $form['email'] = array(
+    $form['email'] = array(
       '#title'       => t('Email Address'),
       '#type'        => 'email',
       '#required'    => TRUE,
       '#size'        => 25,
       '#description' => 'User Email Field'
-     );
+    );
 
-     $form['name'] = array(
-       '#title'       => t('Name'),
-       '#type'        => 'textfield',
-       '#required'    => TRUE,
-       '#size'        => 25,
-       '#description' => 'User Name Field'
-     );
+    $form['name'] = array(
+      '#title'       => t('Name'),
+      '#type'        => 'textfield',
+      '#required'    => TRUE,
+      '#size'        => 25,
+      '#description' => 'User Name Field'
+    );
 
-      $form['password'] = array(
-       '#type'     => 'password',
-       '#title'    => t('Password'),
-       '#required' => TRUE
-      );
+    $form['password'] = array(
+      '#type'     => 'password',
+      '#title'    => t('Password'),
+      '#required' => TRUE
+    );
 
-     $form['submit'] = array(
-       '#title'      => 'submit',
-       '#type'       => 'submit',
-       '#value'      => $this->t('submit'),
-       '#ajax'       => [
-          'callback' => '::submitData',
-       ]
-     );
+    $form['submit'] = array(
+      '#title'      => 'submit',
+      '#type'       => 'submit',
+      '#value'      => $this->t('submit'),
+      '#ajax'       => [
+        'callback' => '::submitData',
+      ]
+    );
 
-     return $form;
+    return $form;
   }
 
 
@@ -123,7 +132,8 @@ class SimpleForm extends FormBase {
    * @return Response
    *   Ajax Response
    */
-  public function submitData(array &$form , FormStateInterface $form_state) {
+  public function submitData(array &$form, FormStateInterface $form_state)
+  {
     $ajax_response = new AjaxResponse();
     $values = $form_state->getValues();
     \Drupal::database()->insert('configform_example')->fields([
@@ -146,7 +156,8 @@ class SimpleForm extends FormBase {
    *
    * @return void
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state)
+  {
     // Checking whether the form is being submitted with ajax previously
     $request = $this->requestStack->getCurrentRequest();
     if (!$request->isXmlHttpRequest()) {
@@ -156,5 +167,4 @@ class SimpleForm extends FormBase {
       return $response;
     }
   }
-
 }
