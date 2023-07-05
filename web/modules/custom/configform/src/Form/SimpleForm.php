@@ -10,6 +10,7 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\configform\DatabaseService;
 /**
  * Implements simpleform
  */
@@ -23,16 +24,25 @@ class SimpleForm extends FormBase {
   protected $messenger;
 
   /**
+   * @var \Drupal\configform\services\DatabaseService
+   *   Database Service Handler
+   */
+  protected $database;
+
+  /**
    * Constructs a new SimpleForm object.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
+   * @param \Drupal\configform\DatabaseService
+   *   The Database Service Handler
    */
-  public function __construct(MessengerInterface $messenger, RequestStack $request_stack) {
+  public function __construct(MessengerInterface $messenger, RequestStack $request_stack, DatabaseService $database) {
     $this->messenger = $messenger;
     $this->requestStack = $request_stack;
+    $this->database = $database;
   }
 
   /**
@@ -45,7 +55,8 @@ class SimpleForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static (
        $container->get('messenger'),
-       $container->get('request_stack')
+       $container->get('request_stack'),
+       $container->get('configform.database_service')
     );
   }
 
@@ -126,11 +137,12 @@ class SimpleForm extends FormBase {
   public function submitData(array &$form , FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
     $values = $form_state->getValues();
-    \Drupal::database()->insert('configform_example')->fields([
+    $data = [
       'email'    => $values['email'],
       'name'     => $values['name'],
-      'password' => md5($values['password']),
-    ])->execute();
+      'password' => md5($values['password'])
+    ];
+    $this->database->insertData('configform_example',$data);
     $ajax_response->addCommand(new HtmlCommand('.success', 'Form Submitted Successfully'));
     return $ajax_response;
   }
