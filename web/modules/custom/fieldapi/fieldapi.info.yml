@@ -1,0 +1,5 @@
+name: Field Api
+type: module
+description: Creating a custom field type to accept rgb color
+package: Custom Module
+core_version_requirement: ^9 || ^10
