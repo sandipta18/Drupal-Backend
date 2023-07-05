@@ -9,6 +9,7 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\Message;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -169,10 +170,12 @@ class ConfigForm extends ConfigFormBase {
 
       // If validation is succesful showing the success message
       $message = $this->t('Thanks for submitting the form');
+      $ajax_response->addCommand(new CssCommand('.success', ['color' => 'green']));
       $ajax_response->addCommand(new HtmlCommand('.success', $message));
     } else {
 
       // If validatiion failed showing the error message
+      $ajax_response->addCommand(new CssCommand('.success', ['color' => 'red']));
       $ajax_response->addCommand(new HtmlCommand('#error-message', $output));
     }
 
