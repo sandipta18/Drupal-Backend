@@ -5,16 +5,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 function routing_entity_access($entity, $operation, $account) {
 
-  // $routeInfo = \Drupal::routeMatch()->getRouteName();
-  // if ($routeInfo === 'routingsystem.route') {
-  //   if ($account->hasRole('editor')) {
-  //     $role = Role::load('editor');
-  //     if ($role) {
-  //       $role->revokePermission('routingsystem.permission');
-  //       $role->save();
-  //       $response = new RedirectResponse(\Drupal::request()->getRequestUri());
-  //       $response->send();
-  //     }
-  //   }
-  // }
+  $routeInfo = \Drupal::routeMatch()->getRouteName();
+  if ($routeInfo === 'routingsystem.route') {
+    if ($account->hasRole('editor')) {
+      $role = Role::load('editor');
+      if ($role) {
+        $role->revokePermission('routingsystem.permission');
+        $role->save();
+        $response = new RedirectResponse(\Drupal::request()->getRequestUri());
+        $response->send();
+      }
+    }
+  }
 }
