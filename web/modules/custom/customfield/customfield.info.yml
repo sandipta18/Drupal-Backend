@@ -1,0 +1,5 @@
+name: Custom Field
+type: module
+package: Custom Module
+core_version_requirement: 10.x
+description: Custom Field Tutorial

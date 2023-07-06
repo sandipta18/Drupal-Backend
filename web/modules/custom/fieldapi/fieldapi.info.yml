@@ -1,0 +1,6 @@
+name: Custom Field Type
+type: module
+package: Custom Module
+core_version_requirement: 10.x
+description: Custom Module to create a field type that will accept rgb color
+
