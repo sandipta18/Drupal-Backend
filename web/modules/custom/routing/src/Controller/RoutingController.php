@@ -5,6 +5,7 @@ namespace Drupal\routing\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Cache\Context\CacheContextInterface;
 
 /**
  * Controller to display the username
@@ -12,22 +13,29 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RoutingController extends ControllerBase {
 
   /**
-   * Class property for current user
+   * Class property for current user.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $account;
 
   /**
+   * Constructs an account interface object
+   *
    * @param AccountInterface $account
+   *   Holds details about the user account
    */
   public function __construct(AccountInterface $account) {
     $this->account = $account;
   }
 
   /**
-   * {@inheritDoc}
+   * This function will be used to retrieve data associated with account
+   * with key 'current_user'
+   *
    * @param ContainerInterface $container
+   *   Instance of dependany injection container
+   *
    * @return object
    */
   public static function create(ContainerInterface $container) {
@@ -37,18 +45,26 @@ class RoutingController extends ControllerBase {
     );
   }
   /**
-   * This function displays the name of the user in a custom page
-   * with routing context /route with the help of a renderable array
-   * that it returns
+   * Prints the overview page
+   *
    * @return array
+   *   Renderable array
    */
   public function myRoute() {
     $userName = $this->account->getDisplayName();
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
     return [
       '#type' => 'markup',
-      '#markup' => $this->t('Hello @userName', [
-        '@userName' => $userName,
-      ]),
+      '#markup' => t(
+        'Hello @userName',
+        ['@userName' => $userName]
+      ),
+      '#cache' => [
+        'tags' => $user->getCacheTags()
+      ],
     ];
   }
+
+
+
 }
