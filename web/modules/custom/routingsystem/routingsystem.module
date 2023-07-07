@@ -3,7 +3,7 @@
 use Drupal\user\Entity\Role;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-function routing_entity_access($entity, $operation, $account) {
+function routingsystem_entity_access($entity, $operation, $account) {
 
   $routeInfo = \Drupal::routeMatch()->getRouteName();
   if ($routeInfo === 'routingsystem.route') {
