@@ -16,10 +16,10 @@ class AlterRoute extends RouteSubscriberBase
    */
   public function alterRoutes(RouteCollection $collection)
   {
-    $route = $collection->get('routingsystem.route');
-    if ($route) {
-      $route->setPath('/route2/changed');
-      $route->setRequirement('_role','administrator');
-    }
+    // $route = $collection->get('routingsystem.route');
+    // if ($route) {
+    //   $route->setPath('/route2/changed');
+    //   $route->setRequirement('_role','administrator');
+    // }
   }
 }
