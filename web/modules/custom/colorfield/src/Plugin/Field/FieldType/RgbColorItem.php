@@ -20,11 +20,6 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_formatter = "rgb_color_static_text"
  * )
  *
- * @DCG
- * If you are implementing a single value field type you may want to inherit
- * this class form some of the field type classes provided by Drupal core.
- * Check out /core/lib/Drupal/Core/Field/Plugin/Field/FieldType directory for a
- * list of available field type implementations.
  */
 class RgbColorItem extends FieldItemBase {
 
@@ -53,15 +48,15 @@ class RgbColorItem extends FieldItemBase {
        ],
        'red' => [
         'type' => 'int',
-        'size' => 'tiny',
+        'size' => 'normal',
        ],
       'green' => [
         'type' => 'int',
-        'size' => 'tiny',
+        'size' => 'normal',
       ],
       'blue' => [
         'type' => 'int',
-        'size' => 'tiny',
+        'size' => 'normal',
       ],
      ];
      $schema = [
