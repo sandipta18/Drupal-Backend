@@ -2,12 +2,12 @@
 
 namespace Drupal\colorfield\Plugin\Field\FieldFormatter;
 
+use Attribute;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Plugin implementation of the 'RGB Color Static Text' formatter.
+ * Plugin implementation of the 'rgb_color_static_text' formatter.
  *
  * @FieldFormatter(
  *   id = "rgb_color_static_text",
@@ -17,26 +17,38 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class RgbColorStaticTextFormatter extends FormatterBase {
+class RGBColorStaticTextFormatter extends FormatterBase
+{
 
+  /**
+   * {@inheritdoc}
+   */
   public function viewElements(FieldItemListInterface $items, $langcode)
   {
     $elements = [];
 
     foreach ($items as $delta => $item) {
-      $colorCode = $item->hex_code;
-      $backgroundColor = '#' . $colorCode;
 
-      $elements[$delta] = [
-        '#type' => 'item',
-        '#markup' => $colorCode,
-        '#attributes' => [
-          'style' => "background-color: $backgroundColor;",
-        ],
-      ];
+      if($items->hex_code) {
+        $colorCode = $items->hex_code;
+        $elements[$delta] = [
+          '#type'   => 'markup',
+          '#markup' => $colorCode,
+        ];
+      } else {
+        $red = $item->red;
+        $green = $item->green;
+        $blue = $item->blue;
+        $colorCode = 'rgb(' . $red . ' , ' . $green . ' , ' . $blue . ')';
+        $elements[$delta] = [
+          '#type'   => 'markup',
+          '#markup' => $colorCode,
+        ];
+      }
     }
 
     return $elements;
   }
+
 
 }

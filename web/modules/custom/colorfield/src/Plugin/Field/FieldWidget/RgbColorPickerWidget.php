@@ -17,6 +17,9 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class RgbColorPickerWidget extends WidgetBase {
 
+  /**
+   * {@inheritDoc}
+   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element['hex_code'] = [
       '#type' => 'color',

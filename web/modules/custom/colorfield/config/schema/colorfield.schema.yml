@@ -1,39 +1,16 @@
-field.widget.settings.rgb_color_hex:
-  type: mapping
-  label: RGB Color Hex widget settings
+colorfield.rgb_color_item:
+  type: config_object
+  label: 'RGB Color Field Item'
   mapping:
-    foo:
+    hex_code:
       type: string
-      label: Foo
-
-field.widget.settings.rgb_color_component:
-  type: mapping
-  label: RGB Color Component widget settings
-  mapping:
-    foo:
-      type: string
-      label: Foo
-
-field.widget.settings.rgb_color_picker:
-  type: mapping
-  label: RGB Color Picker widget settings
-  mapping:
-    foo:
-      type: string
-      label: Foo
-
-field.formatter.settings.rgb_color_static_text:
-  type: mapping
-  label: RGB Color Static Text formatter settings
-  mapping:
-    foo:
-      type: string
-      label: Foo
-
-field.formatter.settings.rgb_color_static_background:
-  type: mapping
-  label: RGB Color Static Background formatter settings
-  mapping:
-    foo:
-      type: string
-      label: Foo
+      label: 'Hex Code'
+    red:
+      type: integer
+      label: 'Red'
+    green:
+      type: integer
+      label: 'Green'
+    blue:
+      type: integer
+      label: 'Blue'
