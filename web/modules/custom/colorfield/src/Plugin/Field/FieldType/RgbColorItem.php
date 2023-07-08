@@ -23,6 +23,9 @@ use Drupal\Core\TypedData\DataDefinition;
  */
 class RgbColorItem extends FieldItemBase {
 
+  /**
+   * {@inheritDoc}
+   */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
      $properties['hex_code'] = DataDefinition::create('string')->
      setLabel(t('Hex Code'));
@@ -40,6 +43,9 @@ class RgbColorItem extends FieldItemBase {
   }
 
 
+  /**
+   * {@inheritDoc}
+   */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
      $columns = [
        'hex_code' => [

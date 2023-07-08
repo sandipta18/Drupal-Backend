@@ -2,6 +2,7 @@
 
 namespace Drupal\colorfield\Plugin\Field\FieldFormatter;
 
+use Attribute;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
@@ -27,37 +28,27 @@ class RGBColorStaticTextFormatter extends FormatterBase
     $elements = [];
 
     foreach ($items as $delta => $item) {
-      $red = $item->red;
-      $green = $item->green;
-      $blue = $item->blue;
 
-      $redHex = $this->componentToHex($red);
-      $greenHex = $this->componentToHex($green);
-      $blueHex = $this->componentToHex($blue);
-
-      $colorCode = '#' . $redHex . $greenHex . $blueHex;
-
-      $elements[$delta] = [
-        '#type' => 'item',
-        '#markup' => $colorCode,
-      ];
+      if($items->hex_code) {
+        $colorCode = $items->hex_code;
+        $elements[$delta] = [
+          '#type'   => 'markup',
+          '#markup' => $colorCode,
+        ];
+      } else {
+        $red = $item->red;
+        $green = $item->green;
+        $blue = $item->blue;
+        $colorCode = 'rgb(' . $red . ' , ' . $green . ' , ' . $blue . ')';
+        $elements[$delta] = [
+          '#type'   => 'markup',
+          '#markup' => $colorCode,
+        ];
+      }
     }
 
     return $elements;
   }
 
-  /**
-   * Convert an RGB color component to a two-digit hexadecimal representation.
-   *
-   * @param int $component
-   *   The RGB color component value.
-   *
-   * @return string
-   *   The two-digit hexadecimal representation of the component.
-   */
-  protected function componentToHex($component)
-  {
-    $hex = dechex($component);
-    return str_pad($hex, 2, '0', STR_PAD_LEFT);
-  }
+
 }
