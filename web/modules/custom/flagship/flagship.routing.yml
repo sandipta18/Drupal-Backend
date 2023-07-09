@@ -1,0 +1,17 @@
+flagship.example:
+  path: '/flagship'
+  defaults:
+    _title: 'Flagship'
+    _controller: '\Drupal\flagship\Controller\FlagshipController::build'
+  requirements:
+    _permission: 'access content'
+
+
+
+flagship.settings:
+  path: '/admin/config/flagship'
+  defaults:
+    _title: 'Flagship Form'
+    _form: 'Drupal\flagship\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'
