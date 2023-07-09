@@ -1,0 +1,15 @@
+<div class="overlay">
+<h1 class="title">FLAGSHIP PROGRAMMES</h1>
+<div class="custom-container">
+	{% for item in data %}
+		<div class="custom-items">
+			<h3 class="group-title"><div class="custom-values">{{ item.parent_group }}</div></h3>
+      <div class="line"></div>
+			<h4 class="custom-label"><div class="custom-values">{{ item.label_1 }}</div></h3>
+			<h2 class="item-value"><div class="custom-values">{{ item.value_1 }}</div></h3>
+			<h4 class="custom-label"><div class="custom-values">{{ item.label_2 }}</div></h3>
+			<h2 class="item-value"><div class="custom-values">{{ item.value_2 }}</div></h3>
+		</div>
+	{% endfor %}
+</div>
+</div>

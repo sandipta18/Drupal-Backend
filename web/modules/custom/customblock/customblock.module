@@ -1,0 +1,34 @@
+<?php
+
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @param array $form
+ *   Holds the information about the formm
+ * @param object $form_state
+ *   Holds information about current state of the form
+ * @param string $form_id
+ *   Holds the form id
+ */
+function customblock_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'user_login_form') {
+    $form['#submit'][] = 'CustomRedirectSubmitHandler';
+  }
+}
+
+/**
+ * Custom submit handler for login form.
+ *
+ * @param array $form
+ *   Holds the information about the form
+ *  @param object $form_state
+ *   Holds information about the current state of the form
+ *
+ */
+function CustomRedirectSubmitHandler($form, $form_state) {
+  $url = Url::fromRoute('customblock.route');
+  $form_state->setRedirectUrl($url);
+}

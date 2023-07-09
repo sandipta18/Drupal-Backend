@@ -1,0 +1,3 @@
+routingsystem.permission :
+  title: 'Admin and Editor Permission'
+  description: 'Route will be accesible to Admin and Editor'

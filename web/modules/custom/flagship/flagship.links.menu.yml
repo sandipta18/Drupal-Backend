@@ -1,0 +1,4 @@
+flagship.settings:
+  title: Flagship Form
+  route_name: flagship.settings
+  weight: 10
