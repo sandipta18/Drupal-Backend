@@ -5,6 +5,8 @@ namespace Drupal\flagship\Form;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
 
 /**
  * Configure flagship settings for this site.
@@ -94,10 +96,10 @@ class SettingsForm extends ConfigFormBase
         '#attributes' => [
            'remove_info' => $index,
         ],
-        // '#ajax' => [
-        //   '#callback' => '::ajaxCallback',
-        //   '#wrapper' => 'groups-wrapper'
-        // ]
+        '#ajax' => [
+          'callback' => '::ajaxCallback',
+          'wrapper' => 'groups',
+        ],
       ];
     }
 
@@ -105,15 +107,13 @@ class SettingsForm extends ConfigFormBase
       '#type' => 'submit',
       '#value' => $this->t('Add'),
       '#submit' => ['::addGroup'],
-      // '#ajax' => [
-      //   '#callback' => '::ajaxCallback',
-      //   '#wrapper' => 'groups-wrapper'
-      // ]
+      '#ajax' => [
+        'callback' => '::ajaxCallback',
+        'wrapper' => 'groups',
+      ]
+     
     ];
-
-
     return parent::buildForm($form, $form_state);
-    // return $form;
   }
 
   public function ajaxCallback(array &$form, FormStateInterface $form_state)
