@@ -93,9 +93,7 @@ class SettingsForm extends ConfigFormBase
         '#type' => 'submit',
         '#value' => $this->t('Remove'),
         '#submit' => ['::removeGroup'],
-        '#attributes' => [
-           'remove_info' => $index,
-        ],
+        '#name' => 'remove_button_' . $index,
         '#ajax' => [
           'callback' => '::ajaxCallback',
           'wrapper' => 'groups',
@@ -111,7 +109,7 @@ class SettingsForm extends ConfigFormBase
         'callback' => '::ajaxCallback',
         'wrapper' => 'groups',
       ]
-     
+
     ];
     return parent::buildForm($form, $form_state);
   }
@@ -138,7 +136,7 @@ class SettingsForm extends ConfigFormBase
   public function removeGroup(array &$form, FormStateInterface $form_state)
   {
     $requestedElement = $form_state->getTriggeringElement();
-    $indexToDelete = $requestedElement['#attributes']['remove_info'];
+    $indexToDelete = substr($requestedElement['#name'], strrpos($requestedElement['#name'], '_') + 1);
     $groupData = $form_state->get('groupData');
     if(isset($groupData[$indexToDelete])) {
       unset($groupData[$indexToDelete]);
