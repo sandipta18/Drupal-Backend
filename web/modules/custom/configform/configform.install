@@ -47,7 +47,7 @@ function configform_schema() {
         'description' => 'Password',
         'type' => 'varchar',
         'length' => 255,
-        'not null' => TRUE
+        'not null' => TRUE,
       ],
     ],
     'primary key' => ['id'],

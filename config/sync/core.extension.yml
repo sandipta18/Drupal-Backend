@@ -54,6 +54,10 @@ module:
   path_alias: 0
   responsive_image: 0
   routing: 0
+<<<<<<< HEAD
+=======
+  routingsystem: 0
+>>>>>>> FT2023-339
   search: 0
   shortcut: 0
   system: 0
