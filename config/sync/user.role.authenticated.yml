@@ -8,7 +8,6 @@ dependencies:
     - contact
     - filter
     - media
-    - routing
     - search
     - shortcut
     - system
@@ -22,8 +21,6 @@ permissions:
   - 'access content'
   - 'access shortcuts'
   - 'access site-wide contact form'
-  - 'dynamic permission 2'
-  - 'dynamic permission 5'
   - 'search content'
   - 'use text format basic_html'
   - 'view media'
