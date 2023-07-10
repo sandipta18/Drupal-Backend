@@ -19,17 +19,18 @@ class DynamicPermissions {
    */
   public function getPermissions() {
     $permissions = [];
-    //Generating 5 permmissions .
+    // Generating 5 permmissions .
     $count = 1;
     while ($count <= 5) {
       $permissions += [
         "dynamic permission $count" => [
           'title' => t('Sample dynamic permission @number', ['@number' => $count]),
-          'description' => 'This is a sample permission generated dynamically.'
+          'description' => 'This is a sample permission generated dynamically.',
         ],
       ];
       $count++;
     }
     return $permissions;
   }
+
 }
