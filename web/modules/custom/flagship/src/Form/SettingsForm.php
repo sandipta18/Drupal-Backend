@@ -112,11 +112,31 @@ class SettingsForm extends ConfigFormBase
     return parent::buildForm($form, $form_state);
   }
 
+  /**
+   * This function handles the ajax callback request from Add and Remove buttons
+   *
+   * @param array $form
+   *   An associative array containing structure of the form
+   * @param FormStateInterface $form_state
+   *   Current State of the form
+   *
+   * @return array
+   *   Updated Content
+   */
   public function ajaxCallback(array &$form, FormStateInterface $form_state)
   {
     return $form['groups'];
   }
 
+  /**
+   * This function adds an empty group of fields
+   *
+   * @param array $form
+   *   An associative array containing structure of the form
+   * @param FormStateInterface $form_state
+   *   Current state of the form
+   *
+   */
   public function addGroup(array &$form, FormStateInterface $form_state)
   {
     $groupData = $form_state->get('groupData');
@@ -131,14 +151,28 @@ class SettingsForm extends ConfigFormBase
     $form_state->setRebuild(TRUE);
   }
 
+  /**
+   * This function removes a group of fields
+   *
+   * @param array $form
+   *   An associative array containing structure of the form
+   * @param FormStateInterface $form_state
+   *   Current State of the form
+   *
+   */
   public function removeGroup(array &$form, FormStateInterface $form_state)
   {
+    // Getting the ID of remove button that requested the removal
     $requestedElement = $form_state->getTriggeringElement();
+    // Extracting the index to be removed
     $indexToDelete = substr($requestedElement['#name'], strrpos($requestedElement['#name'], '_') + 1);
     $groupData = $form_state->get('groupData');
+    // If field group exists for the index, removing it
     if(isset($groupData[$indexToDelete])) {
       unset($groupData[$indexToDelete]);
       $form_state->set('groupData',$groupData);
+      // If only the last field group is left, after unsetting the data repopulating
+      // the field group but without data
       if (empty($form_state->get('groupData'))) {
         $this->addGroup($form, $form_state);
       }
@@ -146,7 +180,9 @@ class SettingsForm extends ConfigFormBase
     }
 
   }
-
+  /**
+   * {@inheritDoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
     $config = $this->config('flagship.settings');
