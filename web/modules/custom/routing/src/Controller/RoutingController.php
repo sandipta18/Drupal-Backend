@@ -2,28 +2,29 @@
 
 namespace Drupal\routing\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
+use Drupal\user\Entity\User;
 use Drupal\Core\Session\AccountInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Cache\Context\CacheContextInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Controller to display the username
+ * Controller to display the username .
  */
 class RoutingController extends ControllerBase {
 
   /**
-   * Class property for current user.
+   * Class property for current user .
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $account;
 
   /**
-   * Constructs an account interface object
+   * Constructs an account interface object .
    *
    * @param AccountInterface $account
-   *   Holds details about the user account
+   *   Holds details about the user account .
    */
   public function __construct(AccountInterface $account) {
     $this->account = $account;
@@ -31,40 +32,38 @@ class RoutingController extends ControllerBase {
 
   /**
    * This function will be used to retrieve data associated with account
-   * with key 'current_user'
+   * with key 'current_user' .
    *
    * @param ContainerInterface $container
-   *   Instance of dependany injection container
+   *   Instance of dependany injection container .
    *
    * @return object
    */
   public static function create(ContainerInterface $container) {
-    //Instantiates the form class
+    //Instantiates the form class .
     return new static(
       $container->get('current_user')
     );
   }
   /**
-   * Prints the overview page
+   * Prints the overview page .
    *
    * @return array
-   *   Renderable array
+   *   Renderable array .
    */
   public function myRoute() {
-    $userName = $this->account->getDisplayName();
-    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    $user_name = $this->account->getDisplayName();
+    $user = User::load($this->account->id());
     return [
       '#type' => 'markup',
       '#markup' => t(
         'Hello @userName',
-        ['@userName' => $userName]
+        ['@userName' => $user_name],
       ),
       '#cache' => [
-        'tags' => $user->getCacheTags()
+        'tags' => $user->getCacheTags(),
       ],
     ];
   }
-
-
 
 }

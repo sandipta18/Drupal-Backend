@@ -5,23 +5,21 @@ namespace Drupal\routing;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Provides dynamic permissions for nodes of different types.
+ * Provides dynamic permissions for nodes of different types .
  */
 class DynamicPermissions {
 
   use StringTranslationTrait;
 
   /**
-   * Returns an array of node type permissions.
+   * Returns an array of node type permissions .
    *
    * @return array
-   *   The node type permissions.
-   *   @see \Drupal\user\PermissionHandlerInterface::getPermissions()
+   *   The node type permissions .
    */
   public function getPermissions() {
     $permissions = [];
-
-    //Generating 5 permmissions
+    //Generating 5 permmissions .
     $count = 1;
     while ($count <= 5) {
       $permissions += [
@@ -32,7 +30,6 @@ class DynamicPermissions {
       ];
       $count++;
     }
-
     return $permissions;
   }
 }
