@@ -3,8 +3,8 @@
 namespace Drupal\routing\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -20,13 +20,23 @@ class RoutingController extends ControllerBase {
   protected $account;
 
   /**
+   * Entity Type Manager Interface .
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs an account interface object .
    *
    * @param \Drupal\Core\Session\AccountInterface $account
    *   Holds details about the user account .
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager.
    */
-  public function __construct(AccountInterface $account) {
+  public function __construct(AccountInterface $account, EntityTypeManagerInterface $entityTypeManager) {
     $this->account = $account;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -41,7 +51,8 @@ class RoutingController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     // Instantiates the form class .
     return new static(
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -53,7 +64,7 @@ class RoutingController extends ControllerBase {
    */
   public function myRoute() {
     $user_name = $this->account->getDisplayName();
-    $user = User::load($this->account->id());
+    $user = $this->entityTypeManager()->getStorage('user')->load($this->account->id());
     return [
       '#type' => 'markup',
       '#markup' => t(
