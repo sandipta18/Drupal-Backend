@@ -1,18 +1,36 @@
 <?php
 
-// This is a documentation of the customhook created for ticket FT2023-340
-// The purpose of this hook is to display the number of times a node is viewed
-// over a session
+/**
+ * @file
+ * Documentation for a custom hook.
+ */
+
+use Drupal\node\NodeInterface;
 
 /**
- * @param int $current_count
- * It defines the number of times user is viewing a node
- * @param \Drupal\node\NodeInterface $node
- * The node being viewed
+ * @addtogroup hooks
+ * @{
  */
-function hook_custom_hook_incremented($current_count, \Drupal\node\NodeInterface $node) {
-  if($current_count == 1) {
-    \Drupal::messenger()->addMessage('This is the first time you have viewed the node %title. ',['%title' => $node->label()]);
+
+/**
+ * This hook facilitates displaying a message upon viewing a node for the first
+ * time, Further it can be also utilised to display the number of times a node
+ * is being viewed over a particular session .
+ *
+ * @param int $current_count
+ *   The current view count for the node.
+ * @param \Drupal\node\NodeInterface $node
+ *   The node being viewed.
+ *
+ * @see hook_incremented()
+ */
+function customhook_incremented($current_count, NodeInterface $node) {
+  if ($current_count == 1) {
+    \Drupal::messenger()->addMessage('This is the first time you have viewed the node
+ %title.', ['%title' => $node->label()]);
   }
 }
 
+/**
+ * @} End of "addtogroup hooks".
+ */

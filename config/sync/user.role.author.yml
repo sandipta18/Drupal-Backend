@@ -19,7 +19,6 @@ dependencies:
     - layout_builder
     - node
     - path
-    - routing
     - system
     - taxonomy
     - toolbar
