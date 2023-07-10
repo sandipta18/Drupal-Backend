@@ -1,0 +1,7 @@
+route.routing:
+  path: /route
+  defaults:
+    _controller: Drupal\routing\Controller\RoutingController::myRoute
+    _title: Custom Route
+  requirements:
+    _permission: 'routing permission'
