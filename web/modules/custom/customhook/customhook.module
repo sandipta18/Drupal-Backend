@@ -40,21 +40,31 @@ function customhook_incremented($current_count, NodeInterface $node) {
  * Implements hook_node_view().
  */
 function customhook_node_view(array &$build, EntityInterface $entity, EntityViewDisplay $display, $view_mode) {
+  // Retrieving the current session object .
   $session = \Drupal::request()->getSession();
+  // Retrieving the current view count of the session, if no value is then
+  // initializing an empty array as the default value .
   $current_counts = $session->get('customhook.view_counts', []);
+  // If the current count of the given node exists incrementing it else
+  // setting the count value as 1 .
   if (!isset($current_counts[$entity->id()])) {
     $current_counts[$entity->id()] = 1;
-  }
-  else {
+  } else {
     $current_counts[$entity->id()]++;
   }
+  // Storing the node count .
   $session->set('customhook.view_counts', $current_counts);
   $module_handler = \Drupal::moduleHandler();
-  $module_handler->invokeAll('incremented',
-  [$current_counts[$entity->id()], $entity]);
+  // Invoking the incremented hook passing current view count and entity id
+  // as argument .
+  $module_handler->invokeAll('incremented', [
+    $current_counts[$entity->id()], $entity,
+  ]);
   $build['view_count'] = [
-    '#markup' => '<p>' . t('You have viewed this node @total times this session.',
-    ['@total' => $current_counts[$entity->id()]]) . '</p>',
+    '#markup' => '<p>' . t(
+      'You have viewed this node @total times this session.',
+      ['@total' => $current_counts[$entity->id()]]
+    ) . '</p>',
     '#cache' => [
       'max-age' => 0,
     ],
