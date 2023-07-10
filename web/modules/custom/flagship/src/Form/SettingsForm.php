@@ -41,9 +41,6 @@ class SettingsForm extends ConfigFormBase
       $groupData = $config->get('groupData') ?: [];
       $form_state->set('groupData', $groupData);
     }
-    if (empty($groupData)) {
-      $this->addGroup($form,$form_state);
-    }
     $form['groups'] = [
       '#title' => $this->t('Groups'),
       '#type' => 'fieldset',
@@ -61,6 +58,7 @@ class SettingsForm extends ConfigFormBase
         $this->t('Value 2'),
         $this->t('Remove')
       ],
+      '#empty' => $this->t('No groups found.'),
     ];
 
     $groupData = $form_state->get('groupData');
@@ -141,6 +139,9 @@ class SettingsForm extends ConfigFormBase
     if(isset($groupData[$indexToDelete])) {
       unset($groupData[$indexToDelete]);
       $form_state->set('groupData',$groupData);
+      if (empty($form_state->get('groupData'))) {
+        $this->addGroup($form, $form_state);
+      }
       $form_state->setRebuild(TRUE);
     }
 
