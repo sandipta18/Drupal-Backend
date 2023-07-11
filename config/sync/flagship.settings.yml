@@ -1,0 +1,29 @@
+groupData:
+  -
+    parent_group: 'HCL SAMUDAY'
+    label_1: Habitations
+    value_1: '2136'
+    label_2: People
+    value_2: '2400000'
+    remove: Remove
+  -
+    parent_group: 'HCLTECH GRANT'
+    label_1: People
+    value_1: '1800000'
+    label_2: Village
+    value_2: '27394'
+    remove: Remove
+  -
+    parent_group: 'HCL UDAY'
+    label_1: People
+    value_1: '890000'
+    label_2: 'HCL Clients'
+    value_2: '11'
+    remove: Remove
+  -
+    parent_group: 'CLEAN NOIDA'
+    label_1: Residents
+    value_1: '500000'
+    label_2: 'Tonnes Waste Managed '
+    value_2: '24254'
+    remove: Remove
