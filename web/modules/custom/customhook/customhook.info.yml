@@ -1,5 +1,0 @@
-name: Hook Tutorial
-type: module
-package: Custom module
-core_version_requirement: ^10
-description: Custom Hook Tutorial
