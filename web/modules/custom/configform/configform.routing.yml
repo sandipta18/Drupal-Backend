@@ -1,6 +1,3 @@
-
-# Drupal Simple Form Demo
-
 Form.simpleForm:
   path: '/form'
   defaults:
@@ -9,9 +6,6 @@ Form.simpleForm:
   requirements:
     _permission: 'simple custom form permission'
 
-
-#Drupal Config Form Demo
-
 Form.configForm:
   path: '/admin/config/form'
   defaults:
@@ -19,4 +13,3 @@ Form.configForm:
     _title: 'Config Form'
   requirements:
     _permission: 'custom permission'
-

@@ -3,4 +3,4 @@ type: module
 package: Custom Module
 description: 'Create a route to define a controller and make the route accessible
 only by admin and editor users'
-core_version_requirement: 10.x
+core_version_requirement: ^9 || ^10
