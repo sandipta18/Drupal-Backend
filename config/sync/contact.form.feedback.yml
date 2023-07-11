@@ -1,0 +1,14 @@
+uuid: 3948b12f-0fdf-498a-80f9-3fe63338303d
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vymHlgJy26BuI5GGj9-IXjwR3dRC5C0tij4BpWJnoqw
+id: feedback
+label: 'Website feedback'
+recipients:
+  - sandiptasardar99@gmail.com
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * This file demonstrates how to use hook function.
+ */
+
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_cron().
+ */
+function customhook_cron() {
+  \Drupal::messenger()->addMessage(t('This message is from cron hook'));
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function customhook_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'node_article_edit_form') {
+    $form['actions']['submit']['#value'] = t('Save your work');
+  }
+}
+
+/**
+ * Implements hook_incremented().
+ */
+function customhook_incremented($current_count, NodeInterface $node) {
+  if ($current_count == 1) {
+    \Drupal::messenger()->addMessage(t('This is the first time you have viewed the
+     node %title. ', ['%title' => $node->label()]));
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function customhook_node_view(array &$build, EntityInterface $entity, EntityViewDisplay $display, $view_mode) {
+  // Retrieving the current session object .
+  $session = \Drupal::request()->getSession();
+  // Retrieving the current view count of the session, if no value is then
+  // initializing an empty array as the default value .
+  $current_counts = $session->get('customhook.view_counts', []);
+  // If the current count of the given node exists incrementing it else
+  // setting the count value as 1 .
+  if (!isset($current_counts[$entity->id()])) {
+    $current_counts[$entity->id()] = 1;
+  } else {
+    $current_counts[$entity->id()]++;
+  }
+  // Storing the node count .
+  $session->set('customhook.view_counts', $current_counts);
+  $module_handler = \Drupal::moduleHandler();
+  // Invoking the incremented hook passing current view count and entity id
+  // as argument .
+  $module_handler->invokeAll('incremented', [
+    $current_counts[$entity->id()], $entity,
+  ]);
+  $build['view_count'] = [
+    '#markup' => '<p>' . t(
+      'You have viewed this node @total times this session.',
+      ['@total' => $current_counts[$entity->id()]]
+    ) . '</p>',
+    '#cache' => [
+      'max-age' => 0,
+    ],
+  ];
+}
