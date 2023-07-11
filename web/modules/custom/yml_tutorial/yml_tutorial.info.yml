@@ -3,4 +3,4 @@ type: module
 package: Custom Module
 description: 'This marks the starting of custom module development. This is the
 first module that focuses on tutorial of yml'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10
