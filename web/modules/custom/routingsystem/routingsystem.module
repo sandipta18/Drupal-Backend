@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * @file
+ * This file revokes the permission of editor role using hook_entity_access .
+ */
+
 use Drupal\user\Entity\Role;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Implements hook_entity_access().
+ */
 function routingsystem_entity_access($entity, $operation, $account) {
 
   $routeInfo = \Drupal::routeMatch()->getRouteName();
