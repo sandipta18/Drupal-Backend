@@ -1,18 +1,25 @@
 <?php
 
-// This is a documentation of the customhook created for ticket FT2023-340
-// The purpose of this hook is to display the number of times a node is viewed
-// over a session
+/**
+ * @file
+ * Documentation for a custom hook.
+ */
 
 /**
+ * Implements hook_incremented().
+ *
+ * Increments the view count for a node and displays a message if it's the first view.
+ *
  * @param int $current_count
- * It defines the number of times user is viewing a node
+ * The current view count for the node.
  * @param \Drupal\node\NodeInterface $node
- * The node being viewed
+ * The node being viewed.
+ *
+ * @see hook_incremented()
  */
-function hook_custom_hook_incremented($current_count, \Drupal\node\NodeInterface $node) {
-  if($current_count == 1) {
-    \Drupal::messenger()->addMessage('This is the first time you have viewed the node %title. ',['%title' => $node->label()]);
+function customhook_incremented($current_count, \Drupal\node\NodeInterface $node) {
+  if ($current_count == 1) {
+    \Drupal::messenger()->addMessage('This is the first time you have viewed the node
+ %title.', ['%title' => $node->label()]);
   }
 }
-

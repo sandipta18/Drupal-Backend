@@ -1,48 +1,172 @@
 <?php
 
 namespace Drupal\configform\Form;
+
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\Core\Database\Database;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\configform\DatabaseService;
+/**
+ * Implements simpleform
+ */
 class SimpleForm extends FormBase {
+
+
+  /**
+   * @var MessengerInterface $messenger
+   *   Instance of MessengerInterface
+   */
+  protected $messenger;
+
+  /**
+   * @var \Drupal\configform\services\DatabaseService
+   *   Database Service Handler
+   */
+  protected $database;
+
+  /**
+   * Constructs a new SimpleForm object.
+   *
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger service.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   * @param \Drupal\configform\DatabaseService
+   *   The Database Service Handler
+   */
+  public function __construct(MessengerInterface $messenger, RequestStack $request_stack, DatabaseService $database) {
+    $this->messenger = $messenger;
+    $this->requestStack = $request_stack;
+    $this->database = $database;
+  }
+
+  /**
+   * @param ContainerInterface $container
+   *   Dependancy injector Interface Container
+   *
+   * @return object
+   *   Returns newly created instance of the class
+   */
+  public static function create(ContainerInterface $container) {
+    return new static (
+       $container->get('messenger'),
+       $container->get('request_stack'),
+       $container->get('configform.database_service')
+    );
+  }
+
+ /**
+  * Generating Unique Form ID
+  *
+  * @return string
+  *   Unique Form ID
+  */
   public function getFormId() {
      return 'config_form_id';
   }
 
+
+  /**
+   * This function will faciliate building the form
+   *
+   * @param array $form
+   *   It contains all the fields in an associative array format
+   * @param FormStateInterface $form_state
+   *   Holds the current state of the form
+   *
+   * @return array
+   *   Array containg form data along with fields
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['element'] = [
+      '#type'   => 'markup',
+      '#markup' => "<div class='success'></div>"
+    ];
 
      $form['email'] = array(
-      '#title' => t('Email Address'),
-      '#type' => 'email',
-      '#required' => TRUE,
-      '#size' => 25,
+      '#title'       => t('Email Address'),
+      '#type'        => 'email',
+      '#required'    => TRUE,
+      '#size'        => 25,
       '#description' => 'User Email Field'
      );
 
      $form['name'] = array(
-       '#title' => t('Name'),
-       '#type' => 'textfield',
-       '#required' => TRUE,
-       '#size' => 25,
+       '#title'       => t('Name'),
+       '#type'        => 'textfield',
+       '#required'    => TRUE,
+       '#size'        => 25,
        '#description' => 'User Name Field'
      );
 
       $form['password'] = array(
-       '#type' => 'password',
-       '#title' => t('Password'),
+       '#type'     => 'password',
+       '#title'    => t('Password'),
        '#required' => TRUE
       );
 
      $form['submit'] = array(
-       '#title' => 'submit',
-       '#type' => 'submit',
-       '#value' => t('submit')
+       '#title'      => 'submit',
+       '#type'       => 'submit',
+       '#value'      => $this->t('submit'),
+       '#ajax'       => [
+          'callback' => '::submitData',
+       ]
      );
 
      return $form;
   }
 
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    \Drupal::messenger()->addMessage(t('Submitted Succesfully'));
+
+  /**
+   * This function facilitates submissions of form without browser refresh .
+   *
+   * @param array $form
+   *   It conains all the fields in an associative array format
+   * @param FormStateInterface $form_state
+   *   It holds the current state of the form along with the data
+   *
+   * @return Response
+   *   Ajax Response
+   */
+  public function submitData(array &$form , FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
+    $values = $form_state->getValues();
+    $data = [
+      'email'    => $values['email'],
+      'name'     => $values['name'],
+      'password' => md5($values['password'])
+    ];
+    $this->database->insertData('configform_example',$data);
+    $ajax_response->addCommand(new HtmlCommand('.success', 'Form Submitted Successfully'));
+    return $ajax_response;
   }
+
+
+  /**
+   * This functions stores the data inside a database
+   *
+   * @param array $form
+   *   It contains the fields in an associative array format
+   * @param FormStateInterface $form_state
+   *   It holds the current state of the form
+   *
+   * @return void
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Checking whether the form is being submitted with ajax previously
+    $request = $this->requestStack->getCurrentRequest();
+    if (!$request->isXmlHttpRequest()) {
+      // This is the regular form submission, so saving the data to the database.
+      $response = $this->submitData($form, $form_state);
+      $this->messenger->addMessage($this->t('Form submitted successfully'));
+      return $response;
+    }
+  }
+
 }

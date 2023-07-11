@@ -2,18 +2,18 @@
 
 namespace Drupal\routing\Controller;
 
-use Drupal\Core\Controller\ControllerBase as ControllerControllerBase;
+use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Custom controller named as defined in the info.yml file
- * Implements a page with a custom message containing username
+ * Controller to display the username
  */
-class RoutingController extends ControllerControllerBase {
+class RoutingController extends ControllerBase {
 
   /**
    * Class property for current user
+   *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $account;
@@ -32,9 +32,9 @@ class RoutingController extends ControllerControllerBase {
    */
   public static function create(ContainerInterface $container) {
     //Instantiates the form class
-   return new static(
-     $container->get('current_user')
-   );
+    return new static(
+      $container->get('current_user')
+    );
   }
   /**
    * This function displays the name of the user in a custom page
@@ -45,9 +45,10 @@ class RoutingController extends ControllerControllerBase {
   public function myRoute() {
     $userName = $this->account->getDisplayName();
     return [
-    '#type' => 'markup',
-    '#markup' => t('Hello @userName',
-    ['@userName' => $userName]
-    )];
+      '#type' => 'markup',
+      '#markup' => $this->t('Hello @userName', [
+        '@userName' => $userName,
+      ]),
+    ];
   }
 }
