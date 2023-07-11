@@ -41,7 +41,7 @@ class SimpleForm extends FormBase {
    *   Dependancy injector Interface Container.
    *
    * @return object
-   *   Returns newly created instance of the class
+   *   Returns newly created instance of the class.
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -54,7 +54,7 @@ class SimpleForm extends FormBase {
    * Generating Unique Form ID.
    *
    * @return string
-   *   Unique Form ID
+   *   Unique Form ID.
    */
   public function getFormId() {
     return 'config_form_id';
@@ -69,7 +69,7 @@ class SimpleForm extends FormBase {
    *   Holds the current state of the form.
    *
    * @return array
-   *   Array containg form data along with fields
+   *   Array containg form data along with fields.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['element'] = [
@@ -120,7 +120,7 @@ class SimpleForm extends FormBase {
    *   It holds the current state of the form along with the data.
    *
    * @return Response
-   *   Ajax Response
+   *   Ajax Response.
    */
   public function submitData(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();

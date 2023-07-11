@@ -17,7 +17,7 @@ class ConfigForm extends ConfigFormBase {
    * Generating a unique form id.
    *
    * @return string
-   *   Unique form id
+   *   Unique form id.
    */
   public function getFormId() {
     return 'config_form';
@@ -27,7 +27,7 @@ class ConfigForm extends ConfigFormBase {
    * This function is used to declare the type of form.
    *
    * @return array
-   *   It stores the config form
+   *   It stores the config form.
    */
   protected function getEditableConfigNames() {
     return [
@@ -44,7 +44,7 @@ class ConfigForm extends ConfigFormBase {
    *   This variable stores the current state of the form.
    *
    * @return array
-   *   Array containing all the form field and data
+   *   Array containing all the form field and data.
    */
   public function buildForm(array $form, FormFormStateInterface $form_state) {
     $form['error'] = [
@@ -113,7 +113,7 @@ class ConfigForm extends ConfigFormBase {
    *   This array holds the current state of the form with input data.
    *
    * @return Response
-   *   Ajax response based on the validation
+   *   Ajax response based on the validation.
    */
   public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
 
@@ -150,7 +150,7 @@ class ConfigForm extends ConfigFormBase {
    *
    * @return mixed
    *   On succesful validation return boolean value
-   *   else return error message
+   *   else return error message.
    */
   public function validate(FormFormStateInterface $form_state) {
 
@@ -165,7 +165,7 @@ class ConfigForm extends ConfigFormBase {
 
     // Exploding the array so now we have the data in this format
     // if email = 'example.com'
-    // Array ( [0] => example [1] => gmail.com )
+    // Array ( [0] => example [1] => gmail.com ).
     $parts = explode('@', $email);
 
     // Pop function removes the last element from an array.
