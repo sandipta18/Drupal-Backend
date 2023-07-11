@@ -37,11 +37,7 @@ class SimpleForm extends FormBase {
   }
 
   /**
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   Dependancy injector Interface Container.
-   *
-   * @return object
-   *   Returns newly created instance of the class.
+   * {@inheritDoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
