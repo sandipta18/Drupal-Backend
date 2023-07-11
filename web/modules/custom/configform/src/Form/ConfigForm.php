@@ -7,17 +7,47 @@ use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as DependencyInjectionContainerInterface;
 
 /**
  * Config form to take user information .
+ *
+ * @internal
  */
 class ConfigForm extends ConfigFormBase {
+
+  /**
+   * Class Property of messenger interface.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
+   * The injected dependancy is assigned to the corresponding class propery.
+   *
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   Class property of messenger interface.
+   */
+  public function __construct(MessengerInterface $messenger) {
+    $this->messenger = $messenger;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(DependencyInjectionContainerInterface $container) {
+    return new static(
+      $container->get('messenger')
+    );
+  }
 
   /**
    * Generating a unique form id.
    *
    * @return string
-   *   Unique form id.
+   *   Unique form id
    */
   public function getFormId() {
     return 'config_form';
@@ -27,7 +57,7 @@ class ConfigForm extends ConfigFormBase {
    * This function is used to declare the type of form.
    *
    * @return array
-   *   It stores the config form.
+   *   It stores the config form
    */
   protected function getEditableConfigNames() {
     return [
@@ -44,7 +74,7 @@ class ConfigForm extends ConfigFormBase {
    *   This variable stores the current state of the form.
    *
    * @return array
-   *   Array containing all the form field and data.
+   *   Array containing all the form field and data
    */
   public function buildForm(array $form, FormFormStateInterface $form_state) {
     $form['error'] = [
@@ -52,29 +82,50 @@ class ConfigForm extends ConfigFormBase {
       '#markup'    => '<div id="error-message"></div>',
     ];
     $form['FullName'] = [
-      '#title'    => t('Full Name'),
+      '#title'    => $this->t('Full Name'),
       '#type'     => 'textfield',
       '#required' => TRUE,
       '#size'     => 30,
     ];
     $form['PhoneNumber'] = [
-      '#title'    => t('Phone Number'),
+      '#title'    => $this->t('Phone Number'),
       '#type'     => 'number',
       '#required' => TRUE,
       '#size'     => 10,
-      '#suffix'   => '<span id="phone_error>',
+      '#suffix'   => '<span id="phone_error">',
     ];
     $form['Email'] = [
-      '#title'    => t('Email'),
+      '#title'    => $this->t('Email'),
       '#type'     => 'email',
       '#required' => TRUE,
     ];
     $form['Gender'] = [
       '#type'     => 'radios',
-      '#title'    => t('Gender'),
+      '#title'    => $this->t('Gender'),
       '#options'  => [
-        'male'    => t('Male'),
-        'female'  => t('Female'),
+        'male'    => $this->t('Male'),
+        'female'  => $this->t('Female'),
+      ],
+    ];
+    $form['Subscribe'] = [
+      '#type'     => 'radios',
+      '#title'    => $this->t('Subscribe'),
+      '#required' => TRUE,
+      '#options'  => [
+        'yes'     => $this->t('Yes'),
+        'no'      => $this->t('No'),
+      ],
+      '#attributes' => [
+        'id' => 'conditional_field',
+      ],
+    ];
+    $form['subscribe_message'] = [
+      '#type'     => 'textfield',
+      '#title'    => $this->t('Why Not'),
+      '#states'   => [
+        'visible' => [
+          ':input[id="conditional_field"]' => ['value' => 'no'],
+        ],
       ],
     ];
     $form['action']['submit'] = [
@@ -101,7 +152,7 @@ class ConfigForm extends ConfigFormBase {
    *   This array holds the current state of the form with input data.
    */
   public function validateForm(array &$form, FormFormStateInterface $form_state) {
-    \Drupal::messenger()->addMessage($this->validate($form_state));
+    $this->messenger()->addMessage($this->validate($form_state));
   }
 
   /**
@@ -113,7 +164,7 @@ class ConfigForm extends ConfigFormBase {
    *   This array holds the current state of the form with input data.
    *
    * @return Response
-   *   Ajax response based on the validation.
+   *   Ajax response based on the validation
    */
   public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
 
@@ -129,6 +180,7 @@ class ConfigForm extends ConfigFormBase {
       $message = $this->t('Thanks for submitting the form');
       $ajax_response->addCommand(new CssCommand('.success', ['color' => 'green']));
       $ajax_response->addCommand(new HtmlCommand('.success', $message));
+      $ajax_response->addCommand(new CssCommand('#error-message', ['display' => 'none']));
     }
     else {
 
@@ -138,7 +190,7 @@ class ConfigForm extends ConfigFormBase {
     }
 
     // Deleting all messages after process is completed.
-    \Drupal::messenger()->deleteAll();
+    $this->messenger()->deleteAll();
     return $ajax_response;
   }
 
@@ -150,7 +202,7 @@ class ConfigForm extends ConfigFormBase {
    *
    * @return mixed
    *   On succesful validation return boolean value
-   *   else return error message.
+   *   else return error message
    */
   public function validate(FormFormStateInterface $form_state) {
 
@@ -165,7 +217,7 @@ class ConfigForm extends ConfigFormBase {
 
     // Exploding the array so now we have the data in this format
     // if email = 'example.com'
-    // Array ( [0] => example [1] => gmail.com ).
+    // Array ( [0] => example [1] => gmail.com )
     $parts = explode('@', $email);
 
     // Pop function removes the last element from an array.
@@ -191,6 +243,14 @@ class ConfigForm extends ConfigFormBase {
     elseif (empty($form_state->getValue('Gender'))) {
 
       return $this->t('Gender should not be empty');
+    }
+    elseif (empty($form_state->getValue('Subscribe'))) {
+
+      return $this->t('Please mention whether you want to subscribe or not');
+    }
+    $subscribe_value = $form_state->getValue('Subscribe');
+    if ($subscribe_value === 'no' && empty($form_state->getValue('subscribe_message'))) {
+      return $this->t('Please give a reason for not subscribing');
     }
 
     return TRUE;

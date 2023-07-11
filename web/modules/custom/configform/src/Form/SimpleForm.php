@@ -74,24 +74,24 @@ class SimpleForm extends FormBase {
     ];
 
     $form['email'] = [
-      '#title'       => t('Email Address'),
+      '#title'       => $this->t('Email Address'),
       '#type'        => 'email',
       '#required'    => TRUE,
       '#size'        => 25,
-      '#description' => 'User Email Field',
+      '#description' => $this->t('User Email Field'),
     ];
 
     $form['name'] = [
-      '#title'       => t('Name'),
+      '#title'       => $this->t('Name'),
       '#type'        => 'textfield',
       '#required'    => TRUE,
       '#size'        => 25,
-      '#description' => 'User Name Field',
+      '#description' => $this->t('User Name Field'),
     ];
 
     $form['password'] = [
       '#type'     => 'password',
-      '#title'    => t('Password'),
+      '#title'    => $this->t('Password'),
       '#required' => TRUE,
     ];
 
