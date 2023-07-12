@@ -54,25 +54,14 @@ class SimpleForm extends FormBase {
   }
 
   /**
-   * Generating Unique Form ID.
-   *
-   * @return string
-   *   Unique Form ID.
+   * {@inheritDoc}
    */
   public function getFormId() {
     return 'config_form_id';
   }
 
   /**
-   * This function will faciliate building the form.
-   *
-   * @param array $form
-   *   It contains all the fields in an associative array format.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Holds the current state of the form.
-   *
-   * @return array
-   *   Array containg form data along with fields.
+   * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['element'] = [
@@ -138,12 +127,7 @@ class SimpleForm extends FormBase {
   }
 
   /**
-   * This functions stores the data inside a database.
-   *
-   * @param array $form
-   *   It contains the fields in an associative array format.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   It holds the current state of the form.
+   * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Checking whether the form is being submitted with ajax previously.
