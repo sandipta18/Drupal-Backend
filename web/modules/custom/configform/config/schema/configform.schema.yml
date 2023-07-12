@@ -1,0 +1,26 @@
+# Schema for configuration files of the Configform module.
+
+configform.settings:
+  type: config_object
+  mapping:
+    name:
+      type: varchar
+      length: 30
+      not null: true
+    phone_number:
+      type: integer
+      length: 10
+      not null: true
+    email:
+      type: varchar
+      not null: true
+    gender:
+      type: varchar
+      not null: true
+    subscription:
+      type: varchar
+      not null: true
+      default: 'yes'
+    subscription_message:
+      type: varchar
+      not null: false

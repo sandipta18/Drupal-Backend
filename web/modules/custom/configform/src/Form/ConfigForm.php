@@ -93,6 +93,7 @@ class ConfigForm extends ConfigFormBase {
         'male'    => $this->t('Male'),
         'female'  => $this->t('Female'),
       ],
+      '#required' => TRUE,
     ];
     $form['subscribe'] = [
       '#type'     => 'radios',
