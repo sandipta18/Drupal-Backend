@@ -45,20 +45,14 @@ class ConfigForm extends ConfigFormBase {
   }
 
   /**
-   * Generating a unique form id.
-   *
-   * @return string
-   *   Unique form id
+   * {@inheritDoc}
    */
   public function getFormId() {
     return 'config_form';
   }
 
   /**
-   * This function is used to declare the type of form.
-   *
-   * @return array
-   *   It stores the config form
+   * {@inheritDoc}
    */
   protected function getEditableConfigNames() {
     return [
@@ -67,15 +61,7 @@ class ConfigForm extends ConfigFormBase {
   }
 
   /**
-   * This function will faciliate building the form.
-   *
-   * @param array $form
-   *   This array contains all the fields in an associative array format.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   This variable stores the current state of the form.
-   *
-   * @return array
-   *   Array containing all the form field and data
+   * {@inheritDoc}
    */
   public function buildForm(array $form, FormFormStateInterface $form_state) {
     $form['error'] = [
@@ -146,12 +132,7 @@ class ConfigForm extends ConfigFormBase {
   }
 
   /**
-   * This function is used to perform validation on the data entered by user.
-   *
-   * @param array $form
-   *   This array contains all the form field in an associative array format.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   This array holds the current state of the form with input data.
+   * {@inheritDoc}
    */
   public function validateForm(array &$form, FormFormStateInterface $form_state) {
     $this->messenger()->addMessage($this->validate($form_state));
@@ -166,18 +147,12 @@ class ConfigForm extends ConfigFormBase {
    *   This array holds the current state of the form with input data.
    *
    * @return Response
-   *   Ajax response based on the validation
+   *   Ajax response based on the validation.
    */
   public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
-
-    // Initializing the response.
     $ajax_response = new AjaxResponse();
-
-    // Calling the validate function to validate data.
     $output = $this->validate($form_state);
-
     if ($output === TRUE) {
-
       // If validation is succesful showing the success message.
       $message = $this->t('Thanks for submitting the form');
       $ajax_response->addCommand(new CssCommand('.success', ['color' => 'green']));
@@ -185,12 +160,10 @@ class ConfigForm extends ConfigFormBase {
       $ajax_response->addCommand(new CssCommand('#error-message', ['display' => 'none']));
     }
     else {
-
       // If validatiion failed showing the error message.
       $ajax_response->addCommand(new CssCommand('#error-message', ['color' => 'red']));
       $ajax_response->addCommand(new HtmlCommand('#error-message', $output));
     }
-
     // Deleting all messages after process is completed.
     $this->messenger()->deleteAll();
     return $ajax_response;
@@ -204,27 +177,18 @@ class ConfigForm extends ConfigFormBase {
    *
    * @return mixed
    *   On succesful validation return boolean value
-   *   else return error message
+   *   else return error message.
    */
   public function validate(FormFormStateInterface $form_state) {
-
-    // Storing the phone number in a variable.
     $phone_number = $form_state->getValue('phone_number');
-
-    // Storing the email id in a variable.
     $email = $form_state->getValue('email');
-
-    // Listing the available domains.
     $allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com'];
-
     // Exploding the array so now we have the data in this format
     // if email = 'example.com'
     // Array ( [0] => example [1] => gmail.com )
     $parts = explode('@', $email);
-
     // Pop function removes the last element from an array.
     $domain = array_pop($parts);
-
     // Validating based on conditions.
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
@@ -259,12 +223,7 @@ class ConfigForm extends ConfigFormBase {
   }
 
   /**
-   * This function is reponsible for storing the data gathered from the form .
-   *
-   * @param array $form
-   *   This array contains all the form field in an associative array format.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   This array holds the current state of the form.
+   * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('config.settings');
