@@ -6,6 +6,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as DependencyInjectionContainerInterface;
@@ -81,25 +82,25 @@ class ConfigForm extends ConfigFormBase {
       '#type'      => 'markup',
       '#markup'    => '<div id="error-message"></div>',
     ];
-    $form['FullName'] = [
+    $form['full_name'] = [
       '#title'    => $this->t('Full Name'),
       '#type'     => 'textfield',
       '#required' => TRUE,
       '#size'     => 30,
     ];
-    $form['PhoneNumber'] = [
+    $form['phone_number'] = [
       '#title'    => $this->t('Phone Number'),
       '#type'     => 'number',
       '#required' => TRUE,
       '#size'     => 10,
       '#suffix'   => '<span id="phone_error">',
     ];
-    $form['Email'] = [
+    $form['email'] = [
       '#title'    => $this->t('Email'),
       '#type'     => 'email',
       '#required' => TRUE,
     ];
-    $form['Gender'] = [
+    $form['gender'] = [
       '#type'     => 'radios',
       '#title'    => $this->t('Gender'),
       '#options'  => [
@@ -107,7 +108,7 @@ class ConfigForm extends ConfigFormBase {
         'female'  => $this->t('Female'),
       ],
     ];
-    $form['Subscribe'] = [
+    $form['subscribe'] = [
       '#type'     => 'radios',
       '#title'    => $this->t('Subscribe'),
       '#required' => TRUE,
@@ -118,6 +119,7 @@ class ConfigForm extends ConfigFormBase {
       '#attributes' => [
         'id' => 'conditional_field',
       ],
+      '#default_value' => 'yes',
     ];
     $form['subscribe_message'] = [
       '#type'     => 'textfield',
@@ -207,13 +209,13 @@ class ConfigForm extends ConfigFormBase {
   public function validate(FormFormStateInterface $form_state) {
 
     // Storing the phone number in a variable.
-    $phoneNumber = $form_state->getValue('PhoneNumber');
+    $phone_number = $form_state->getValue('phone_number');
 
     // Storing the email id in a variable.
-    $email = $form_state->getValue('Email');
+    $email = $form_state->getValue('email');
 
     // Listing the available domains.
-    $allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com'];
+    $allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com'];
 
     // Exploding the array so now we have the data in this format
     // if email = 'example.com'
@@ -228,32 +230,52 @@ class ConfigForm extends ConfigFormBase {
 
       return $this->t('Invalid Email Format');
     }
-    elseif (!in_array($domain, $allowedDomains)) {
+    elseif (!in_array($domain, $allowed_domains)) {
 
       return $this->t('Email ID should belong to gmail, yahoo or outlook');
     }
-    elseif (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $phoneNumber) or strlen($phoneNumber) > 10) {
+    elseif (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $phone_number) or strlen($phone_number) > 10) {
 
       return $this->t('Invalid Phone Number');
     }
-    elseif (empty($form_state->getValue('FullName'))) {
+    elseif (empty($form_state->getValue('full_name'))) {
 
       return $this->t('Gender should not be empty');
     }
-    elseif (empty($form_state->getValue('Gender'))) {
+    elseif (empty($form_state->getValue('gender'))) {
 
       return $this->t('Gender should not be empty');
     }
-    elseif (empty($form_state->getValue('Subscribe'))) {
+    elseif (empty($form_state->getValue('subscribe'))) {
 
       return $this->t('Please mention whether you want to subscribe or not');
     }
-    $subscribe_value = $form_state->getValue('Subscribe');
+    $subscribe_value = $form_state->getValue('subscribe');
     if ($subscribe_value === 'no' && empty($form_state->getValue('subscribe_message'))) {
       return $this->t('Please give a reason for not subscribing');
     }
 
     return TRUE;
+  }
+
+  /**
+   * This function is reponsible for storing the data gathered from the form .
+   *
+   * @param array $form
+   *   This array contains all the form field in an associative array format.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   This array holds the current state of the form.
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $config = $this->config('config.settings');
+    $config->set('name', $form_state->getValue('full_name'));
+    $config->set('phone_number', $form_state->getValue('phone_number'));
+    $config->set('email', $form_state->getValue('email'));
+    $config->set('gender', $form_state->getValue('gender'));
+    $config->set('subscription', $form_state->getValue('subscribe'));
+    $config->set('subscription_message', $form_state->getValue('subscribe_message'));
+    $config->save();
+    parent::submitForm($form, $form_state);
   }
 
 }

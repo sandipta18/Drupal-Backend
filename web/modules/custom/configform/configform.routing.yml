@@ -1,13 +1,13 @@
-Form.simpleForm:
-  path: '/form'
+form.simpleForm:
+  path: '/Customgenericform'
   defaults:
     _form: '\Drupal\configform\Form\SimpleForm'
     _title: 'Simple Form'
   requirements:
     _permission: 'simple custom form permission'
 
-Form.configForm:
-  path: '/admin/config/form'
+form.configForm:
+  path: '/admin/config/Customconfigform'
   defaults:
     _form: '\Drupal\configform\Form\ConfigForm'
     _title: 'Config Form'

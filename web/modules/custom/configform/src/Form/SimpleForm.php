@@ -24,6 +24,13 @@ class SimpleForm extends FormBase {
   protected $messenger;
 
   /**
+   * Instance of Request Stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
    * Constructs a new SimpleForm object.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
