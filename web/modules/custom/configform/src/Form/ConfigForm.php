@@ -64,6 +64,10 @@ class ConfigForm extends ConfigFormBase {
    * {@inheritDoc}
    */
   public function buildForm(array $form, FormFormStateInterface $form_state) {
+    // Get the configuration values from the YAML file.
+    $config = $this->config('config.settings');
+    $config_values = $config->get();
+
     $form['error'] = [
       '#type'      => 'markup',
       '#markup'    => '<div id="error-message"></div>',
@@ -73,6 +77,7 @@ class ConfigForm extends ConfigFormBase {
       '#type'     => 'textfield',
       '#required' => TRUE,
       '#size'     => 30,
+      '#default_value' => $config_values['name'],
     ];
     $form['phone_number'] = [
       '#title'    => $this->t('Phone Number'),
@@ -80,11 +85,13 @@ class ConfigForm extends ConfigFormBase {
       '#required' => TRUE,
       '#size'     => 10,
       '#suffix'   => '<span id="phone_error">',
+      '#default_value' => $config_values['phone_number'],
     ];
     $form['email'] = [
       '#title'    => $this->t('Email'),
       '#type'     => 'email',
       '#required' => TRUE,
+      '#default_value' => $config_values['email'],
     ];
     $form['gender'] = [
       '#type'     => 'radios',
@@ -94,6 +101,7 @@ class ConfigForm extends ConfigFormBase {
         'female'  => $this->t('Female'),
       ],
       '#required' => TRUE,
+      '#default_value' => $config_values['gender'],
     ];
     $form['subscribe'] = [
       '#type'     => 'radios',
@@ -106,7 +114,7 @@ class ConfigForm extends ConfigFormBase {
       '#attributes' => [
         'id' => 'conditional_field',
       ],
-      '#default_value' => 'yes',
+      '#default_value' => $config_values['subscription'],
     ];
     $form['subscribe_message'] = [
       '#type'     => 'textfield',
@@ -116,6 +124,7 @@ class ConfigForm extends ConfigFormBase {
           ':input[id="conditional_field"]' => ['value' => 'no'],
         ],
       ],
+      '#default_value' => $config_values['subscription_message'],
     ];
     $form['action']['submit'] = [
       '#type'      => 'submit',
@@ -128,7 +137,6 @@ class ConfigForm extends ConfigFormBase {
       '#type'     => 'markup',
       '#markup'   => '<div class="success"></div>',
     ];
-
     return $form;
   }
 
