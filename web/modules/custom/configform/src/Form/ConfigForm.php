@@ -56,7 +56,7 @@ class ConfigForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'config.settings',
+      'configform.settings',
     ];
   }
 
@@ -65,7 +65,7 @@ class ConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormFormStateInterface $form_state) {
     // Get the configuration values from the YAML file.
-    $config = $this->config('config.settings');
+    $config = $this->config('configform.settings');
     $config_values = $config->get();
 
     $form['error'] = [
@@ -235,7 +235,7 @@ class ConfigForm extends ConfigFormBase {
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('config.settings');
+    $config = $this->config('configform.settings');
     $config->set('name', $form_state->getValue('full_name'));
     $config->set('phone_number', $form_state->getValue('phone_number'));
     $config->set('email', $form_state->getValue('email'));
