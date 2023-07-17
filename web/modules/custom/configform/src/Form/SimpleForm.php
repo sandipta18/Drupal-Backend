@@ -2,6 +2,7 @@
 
 namespace Drupal\configform\Form;
 
+use Drupal\configform\DatabaseService;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
@@ -24,6 +25,13 @@ class SimpleForm extends FormBase {
   protected $messenger;
 
   /**
+   * Database Service Handler.
+   *
+   * @var \Drupal\configform\services\DatabaseService
+   */
+  protected $database;
+
+  /**
    * Instance of Request Stack.
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
@@ -37,10 +45,13 @@ class SimpleForm extends FormBase {
    *   The messenger service.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
+   * @param \Drupal\configform\DatabaseService $database
+   *   The database service handler.
    */
-  public function __construct(MessengerInterface $messenger, RequestStack $request_stack) {
+  public function __construct(MessengerInterface $messenger, RequestStack $request_stack, DatabaseService $database) {
     $this->messenger = $messenger;
     $this->requestStack = $request_stack;
+    $this->database = $database;
   }
 
   /**
@@ -49,7 +60,8 @@ class SimpleForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('messenger'),
-      $container->get('request_stack')
+      $container->get('request_stack'),
+      $container->get('configform.database_service'),
     );
   }
 
@@ -117,11 +129,12 @@ class SimpleForm extends FormBase {
   public function submitData(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
     $values = $form_state->getValues();
-    \Drupal::database()->insert('configform_example')->fields([
+    $data = [
       'email'    => $values['email'],
       'name'     => $values['name'],
       'password' => md5($values['password']),
-    ])->execute();
+    ];
+    $this->database->insertData('configform_example', $data);
     $ajax_response->addCommand(new HtmlCommand('.success', 'Form Submitted Successfully'));
     return $ajax_response;
   }

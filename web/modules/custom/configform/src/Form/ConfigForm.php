@@ -191,7 +191,9 @@ class ConfigForm extends ConfigFormBase {
   public function validate(FormFormStateInterface $form_state) {
     $phone_number = $form_state->getValue('phone_number');
     $email = $form_state->getValue('email');
-    $allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com'];
+    $config = $this->config('configform.settings');
+    $config_values = $config->get();
+    $allowed_domains = $config_values['allowed_domains'];
     // Exploding the array so now we have the data in this format
     // if email = 'example.com'
     // Array ( [0] => example [1] => gmail.com )
