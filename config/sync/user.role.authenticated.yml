@@ -6,8 +6,10 @@ dependencies:
     - filter.format.basic_html
   module:
     - contact
+    - file
     - filter
     - media
+    - routing
     - search
     - shortcut
     - system
@@ -21,6 +23,9 @@ permissions:
   - 'access content'
   - 'access shortcuts'
   - 'access site-wide contact form'
+  - 'delete own files'
+  - 'dynamic permission 3'
+  - 'routing permission'
   - 'search content'
   - 'use text format basic_html'
   - 'view media'

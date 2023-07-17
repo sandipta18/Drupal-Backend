@@ -1,0 +1,11 @@
+movie.type_add:
+  title: 'Add movie type'
+  route_name: entity.movie_type.add_form
+  appears_on:
+    - entity.movie_type.collection
+
+movie.add_page:
+  title: 'Add movie'
+  route_name: entity.movie.add_page
+  appears_on:
+    - entity.movie.collection

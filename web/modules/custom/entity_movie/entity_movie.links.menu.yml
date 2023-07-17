@@ -1,0 +1,5 @@
+entity.movie_type.collection:
+  title: 'Movie types'
+  description: 'Manage and CRUD actions on Movie type.'
+  parent: system.admin_structure
+  route_name: entity.movie_type.collection

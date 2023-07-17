@@ -1,0 +1,40 @@
+uuid: 7fad1c2a-841a-422c-805f-cb26a7857cc5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.movie_image
+    - node.type.movie_info
+  module:
+    - image
+_core:
+  default_config_hash: uUcRmzzeQZ7GAHA2SuvFlsnHHBl18cyOtwKcqvPQGMY
+id: node.movie_info.movie_image
+field_name: movie_image
+entity_type: node
+bundle: movie_info
+label: Image
+description: 'Image of the Movie'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: entity_movie/images
+  file_extensions: 'png jpg jpeg'
+  max_filesize: 10MB
+  max_resolution: 1920x1080
+  alt_field: true
+  title_field: true
+  alt_field_required: 1
+  title_field_required: 0
+  min_resolution: ''
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: image

@@ -1,0 +1,16 @@
+uuid: d4d830e8-88bb-4021-8958-d5d22f046a27
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - entity_movie
+_core:
+  default_config_hash: wAvqBgk9HRhdR2RjlEdFpAsN6p2yLx0tEUnSP_mRwzY
+name: Movie
+type: movie_info
+description: 'Content type that can be used to provide additional information on <em>Movies</em>'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true
