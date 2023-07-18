@@ -161,7 +161,7 @@ class ConfigForm extends ConfigFormBase {
   public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
     $output = $this->validate($form_state);
-    if ($output === TRUE) {
+    if ($output) {
       // If validation is succesful showing the success message.
       $message = $this->t('Thanks for submitting the form');
       $ajax_response->addCommand(new CssCommand('.success', ['color' => 'green']));
@@ -169,7 +169,7 @@ class ConfigForm extends ConfigFormBase {
       $ajax_response->addCommand(new CssCommand('#error-message', ['display' => 'none']));
     }
     else {
-      // If validatiion failed showing the error message.
+      // If validation failed showing the error message.
       $ajax_response->addCommand(new CssCommand('#error-message', ['color' => 'red']));
       $ajax_response->addCommand(new HtmlCommand('#error-message', $output));
     }
@@ -227,7 +227,7 @@ class ConfigForm extends ConfigFormBase {
     }
     $subscribe_value = $form_state->getValue('subscribe');
     if ($subscribe_value === 'no' && empty($form_state->getValue('subscribe_message'))) {
-      return $this->t('Please give a reason for not subscribing');
+      return $this->t('Get updates over email?');
     }
 
     return TRUE;

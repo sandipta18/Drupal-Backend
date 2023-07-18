@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class SimpleForm extends FormBase {
 
-
   /**
    * Instance of MessengerInterface .
    *
@@ -48,7 +47,9 @@ class SimpleForm extends FormBase {
    * @param \Drupal\configform\DatabaseService $database
    *   The database service handler.
    */
-  public function __construct(MessengerInterface $messenger, RequestStack $request_stack, DatabaseService $database) {
+  public function __construct(MessengerInterface $messenger,
+  RequestStack $request_stack,
+  DatabaseService $database) {
     $this->messenger = $messenger;
     $this->requestStack = $request_stack;
     $this->database = $database;
@@ -119,11 +120,11 @@ class SimpleForm extends FormBase {
    * This function facilitates submissions of form without browser refresh .
    *
    * @param array $form
-   *   It conains all the fields in an associative array format.
+   *   It contains all the fields in an associative array format.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   It holds the current state of the form along with the data.
    *
-   * @return Response
+   * @return \Drupal\Core\Ajax\AjaxResponse
    *   Ajax Response.
    */
   public function submitData(array &$form, FormStateInterface $form_state) {
