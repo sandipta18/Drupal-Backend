@@ -2,9 +2,9 @@
 
 namespace Drupal\configform\Form;
 
-use Drupal\Core\Database\Connection;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -44,8 +44,8 @@ class SimpleForm extends FormBase {
    *   The messenger service.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
-   * @param \Drupal\configform\DatabaseService $database
-   *   The database service handler.
+   * @param \Drupal\Core\Database\Connection $con
+   *   The database connection handler.
    */
   public function __construct(MessengerInterface $messenger,
   RequestStack $request_stack,
