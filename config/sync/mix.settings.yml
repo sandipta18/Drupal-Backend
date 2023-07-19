@@ -1,5 +1,6 @@
 _core:
   default_config_hash: mbJkbFGa-wGYApJNDEnW699KHL9SbZO5PoWWp94QiqE
+langcode: en-gb
 hide_revision_field: false
 dev_mode: true
 remove_x_generator: false

@@ -1,5 +1,6 @@
 name: entity_movie
 type: module
-description: Provides additional functionality for the site.
+description: Create a custom module to create a custom entity type Movie.
 package: Custom Module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10
+configure: entity.movie_configuration.collection

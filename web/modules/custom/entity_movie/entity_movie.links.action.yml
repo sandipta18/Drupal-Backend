@@ -9,3 +9,9 @@ movie.add_page:
   route_name: entity.movie.add_page
   appears_on:
     - entity.movie.collection
+
+entity.movie_configuration.add_form:
+  route_name: 'entity.movie_configuration.add_form'
+  title: 'Add movie configuration'
+  appears_on:
+    - entity.movie_configuration.collection

@@ -1,5 +1,5 @@
-uuid: 1f7efaf2-f105-4fca-b325-78d72126b6bc
-langcode: en
+uuid: 0a850143-d1e8-4b08-a80b-8ab795f63833
+langcode: en-gb
 status: true
 dependencies:
   config:
@@ -14,7 +14,7 @@ dependencies:
     module:
       - media_library
 _core:
-  default_config_hash: GDIFCs-lTKQIMvaNZ95zofFcqpTxDYakxx02_zZFkmM
+  default_config_hash: 0WeWvFAfYGQRUX2FROBExMK5TQDkcqPpPnUZdT4Hy7k
 id: media_library
 label: 'Media library'
 module: views
@@ -1173,7 +1173,7 @@ display:
             custom_date_format: ''
             timezone: ''
             tooltip:
-              date_format: ''
+              date_format: long
               custom_date_format: ''
             time_diff:
               enabled: false

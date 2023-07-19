@@ -2,3 +2,6 @@ administer movie types:
   title: 'Administer movie types'
   description: 'Maintain the types of movie entity.'
   restrict access: true
+
+administer movie_configuration:
+  title: 'Administer movie configuration'

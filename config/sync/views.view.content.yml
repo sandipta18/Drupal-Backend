@@ -1,12 +1,12 @@
-uuid: 1cc2a4f8-1c1f-491e-8949-022636217c1f
-langcode: en
+uuid: c1748247-067e-4c18-9b9f-763260b94ce3
+langcode: en-gb
 status: true
 dependencies:
   module:
     - node
     - user
 _core:
-  default_config_hash: vBKWYGGDoAX-tFd1JErB8tZLSxx3lJ0foouVsgpcbB4
+  default_config_hash: 3ELwBpDb9lzqW5-daqjZYsC5lNcwbDS_i_-LKba12Lw
 id: content
 label: Content
 module: node
@@ -188,7 +188,7 @@ display:
             custom_date_format: ''
             timezone: ''
             tooltip:
-              date_format: ''
+              date_format: long
               custom_date_format: ''
             time_diff:
               enabled: false

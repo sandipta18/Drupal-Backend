@@ -1,5 +1,5 @@
-uuid: b2e717f9-d848-44ee-a0cd-dd9da9a42e81
-langcode: en
+uuid: e8005b1c-2790-4730-bd43-d834f9e8d354
+langcode: en-gb
 status: true
 dependencies:
   config:
@@ -55,7 +55,7 @@ content:
     third_party_settings: {  }
   movie_image:
     type: image_image
-    weight: 11
+    weight: 10
     region: content
     settings:
       progress_indicator: throbber
@@ -63,7 +63,7 @@ content:
     third_party_settings: {  }
   movie_price:
     type: number
-    weight: 10
+    weight: 11
     region: content
     settings:
       placeholder: ''
