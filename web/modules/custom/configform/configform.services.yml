@@ -1,4 +1,0 @@
-services:
-  configform.database_service:
-    class: Drupal\configform\DatabaseService
-    arguments: ['@database']
