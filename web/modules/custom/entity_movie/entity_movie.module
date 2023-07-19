@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Render\Element;
-use Drupal\entity_movie\Entity\Movie;
 use Drupal\user\UserInterface;
 
 /**

@@ -2,10 +2,9 @@
 
 namespace Drupal\entity_movie;
 
-use Drupal;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
+use Drupal\Core\Entity\EntityInterface;
+
 /**
  * Provides a listing of movie configurations.
  */

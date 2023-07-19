@@ -81,7 +81,7 @@ class MovieConfiguration extends ConfigEntityBase implements MovieConfigurationI
   protected $description;
 
   /**
-   * The year on which movie was released
+   * The year on which movie was released.
    *
    * @var mixed
    */

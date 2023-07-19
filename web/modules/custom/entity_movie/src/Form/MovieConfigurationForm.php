@@ -10,8 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @property \Drupal\entity_movie\MovieConfigurationInterface $entity
  */
-class MovieConfigurationForm extends EntityForm
-{
+class MovieConfigurationForm extends EntityForm {
 
   /**
    * {@inheritdoc}
@@ -44,7 +43,8 @@ class MovieConfigurationForm extends EntityForm
       '#tags' => TRUE,
       '#size' => 30,
       '#maxlength' => 1024,
-      '#default_value' => $this->entityTypeManager->getStorage('node')->load($id), // Dependency injection.
+    // Dependency injection.
+      '#default_value' => $this->entityTypeManager->getStorage('node')->load($id),
       '#persist' => TRUE,
     ];
     $default_year = $this->entity->get('year');
@@ -73,4 +73,5 @@ class MovieConfigurationForm extends EntityForm
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
     return $result;
   }
+
 }
