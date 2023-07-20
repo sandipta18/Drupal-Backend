@@ -55,7 +55,7 @@ class CustomBlock extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * It displays the overview page.
+   * It displays the overview block.
    *
    * @return array
    *   Renderable Array
