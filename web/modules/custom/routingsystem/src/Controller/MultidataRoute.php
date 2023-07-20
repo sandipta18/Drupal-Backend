@@ -3,6 +3,7 @@
 namespace Drupal\routingsystem\Controller;
 
 use Drupal\Core\Controller\ControllerBase as ControllerControllerBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Controller for page route.
@@ -12,7 +13,7 @@ class MultidataRoute extends ControllerControllerBase {
   /**
    * Returns the overview page.
    *
-   * @param mixed $data
+   * @param int $data
    *   Accepting dynamic parameter from url.
    *
    * @return array
@@ -21,7 +22,7 @@ class MultidataRoute extends ControllerControllerBase {
   public function multiRoute($data) {
     return [
       '#type'   => 'markup',
-      '#markup' => t('Hi @value', [
+      '#markup' => $this->t('It is node @value', [
         '@value' => $data,
       ]),
     ];
