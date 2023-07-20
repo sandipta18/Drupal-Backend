@@ -1,0 +1,25 @@
+uuid: 2102ef08-e9e3-4e56-b213-9e93768e56e2
+langcode: en
+status: true
+dependencies:
+  module:
+    - flagship
+    - system
+  theme:
+    - umami
+id: umami_example
+theme: umami
+region: content
+weight: 0
+provider: null
+plugin: flagship_example
+settings:
+  id: flagship_example
+  label: Example
+  label_display: visible
+  provider: flagship
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "<front>\r\n/flagship"

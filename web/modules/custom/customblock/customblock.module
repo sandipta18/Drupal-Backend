@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Controls the redirecting url after user login.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_alter().
+ */
+function customblock_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'user_login_form') {
+    $form['#submit'][] = 'customblock_redirect_submit_handler';
+  }
+}
+
+/**
+ * Custom submit handler for login form.
+ *
+ * @param array $form
+ *   Holds the information about the form.
+ * @param object $form_state
+ *   Holds information about the current state of the form.
+ */
+function customblock_redirect_submit_handler($form, $form_state) {
+  $url = Url::fromRoute('customblock.route');
+  $form_state->setRedirectUrl($url);
+}
