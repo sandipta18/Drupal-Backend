@@ -155,7 +155,7 @@ class ConfigForm extends ConfigFormBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   This array holds the current state of the form with input data.
    *
-   * @return Response
+   * @return \Drupal\Core\Ajax\AjaxResponse
    *   Ajax response based on the validation.
    */
   public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
