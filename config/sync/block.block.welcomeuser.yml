@@ -1,0 +1,25 @@
+uuid: 239c0d33-28bf-49f8-942f-35651bd50dfe
+langcode: en
+status: true
+dependencies:
+  module:
+    - customblock
+    - system
+  theme:
+    - umami
+id: welcomeuser
+theme: umami
+region: content
+weight: 0
+provider: null
+plugin: welcome_user_role_block
+settings:
+  id: welcome_user_role_block
+  label: 'Welcome User'
+  label_display: visible
+  provider: customblock
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /custom-welcome-page

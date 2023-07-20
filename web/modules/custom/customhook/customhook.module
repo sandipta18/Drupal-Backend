@@ -2,68 +2,61 @@
 
 /**
  * @file
- * This file demonstrates  how to use hook function
+ * This file demonstrates how to use hook function.
  */
 
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
 
 /**
- * Implements hook_cron()
+ * Implements hook_cron().
  */
 function customhook_cron() {
   \Drupal::messenger()->addMessage(t('This message is from cron hook'));
 }
 
 /**
- * Implements hook_form_alter()
+ * Implements hook_form_alter().
  */
-function customhook_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function customhook_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id == 'node_article_edit_form') {
     $form['actions']['submit']['#value'] = t('Save your work');
   }
 }
 
 /**
- * Implements hook_custom_hook_incremented
- *
- * @param int $current_count
- * @param \Drupal\node\NodeInterface $node
- *
+ * Implements hook_incremented().
  */
-function hook_custom_hook_incremented($current_count, \Drupal\node\NodeInterface $node) {
+function customhook_incremented($current_count, NodeInterface $node) {
   if ($current_count == 1) {
-    \Drupal::messenger()->addMessage('This is the first time you have viewed the
-     node %title. ', ['%title' => $node->label()]);
+    \Drupal::messenger()->addMessage(t('This is the first time you have viewed the
+     node %title. ', ['%title' => $node->label()]));
   }
 }
 
 /**
- * This function is implemented to display the number of times a node is visited
- * in a particular session
- *
- * @param array $build
- * @param EntityInterface $entity
- * @return array
- *
+ * Implements hook_node_view().
  */
-function customhook_node_view(array &$build, EntityInterface $entity) {
+function customhook_node_view(array &$build, EntityInterface $entity, EntityViewDisplay $display, $view_mode) {
   $session = \Drupal::request()->getSession();
-  $current_counts = $session->get('customhook.view_counts', array());
+  $current_counts = $session->get('customhook.view_counts', []);
   if (!isset($current_counts[$entity->id()])) {
     $current_counts[$entity->id()] = 1;
-  } else {
+  }
+  else {
     $current_counts[$entity->id()]++;
   }
   $session->set('customhook.view_counts', $current_counts);
   $module_handler = \Drupal::moduleHandler();
-  $module_handler->invokeAll('hook_custom_hook_incremented',
-  array($current_counts[$entity->id()], $entity));
-  $build['view_count'] = array(
+  $module_handler->invokeAll('incremented',
+  [$current_counts[$entity->id()], $entity]);
+  $build['view_count'] = [
     '#markup' => '<p>' . t('You have viewed this node @total times this session.',
-    array('@total' => $current_counts[$entity->id()])) . '</p>',
-    '#cache' => array(
+    ['@total' => $current_counts[$entity->id()]]) . '</p>',
+    '#cache' => [
       'max-age' => 0,
-    ),
-  );
+    ],
+  ];
 }
-
