@@ -2,9 +2,7 @@
 
 namespace Drupal\colorfield\Plugin\Field\FieldFormatter;
 
-use Attribute;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
 
 /**
  * Plugin implementation of the 'rgb_color_static_text' formatter.
@@ -17,38 +15,24 @@ use Drupal\Core\Field\FormatterBase;
  *   }
  * )
  */
-class RGBColorStaticTextFormatter extends FormatterBase
-{
+class RgbColorStaticTextFormatter extends RgbColorFormatterBase {
 
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode)
-  {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-
     foreach ($items as $delta => $item) {
-
-      if($items->hex_code) {
-        $colorCode = $items->hex_code;
+      if ($item->color_code) {
+        $color = $this->colorInfo($items, $delta);
         $elements[$delta] = [
           '#type'   => 'markup',
-          '#markup' => $colorCode,
-        ];
-      } else {
-        $red = $item->red;
-        $green = $item->green;
-        $blue = $item->blue;
-        $colorCode = 'rgb(' . $red . ' , ' . $green . ' , ' . $blue . ')';
-        $elements[$delta] = [
-          '#type'   => 'markup',
-          '#markup' => $colorCode,
+          '#markup' => $color,
         ];
       }
     }
 
     return $elements;
   }
-
 
 }

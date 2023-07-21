@@ -3,7 +3,6 @@
 namespace Drupal\colorfield\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Template\Attribute;
 
 /**
@@ -17,38 +16,23 @@ use Drupal\Core\Template\Attribute;
  *   }
  * )
  */
-class RgbColorStaticBackgroundFormatter extends FormatterBase
-{
+class RgbColorStaticBackgroundFormatter extends RgbColorFormatterBase {
 
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode)
-  {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
 
     foreach ($items as $delta => $item) {
-      if ($item->hex_code) {
-        $colorCode = $item->hex_code;
+      if ($item->color_code) {
+        $color = $this->colorInfo($items, $delta);
         $attributes = new Attribute();
-        $attributes->setAttribute('style', 'background-color: ' . $colorCode);      
+        $attributes->setAttribute('style', 'background-color: ' . $color);
         $elements[$delta] = [
           '#type' => 'html_tag',
           '#tag' => 'div',
-          '#value' => $colorCode,
-          '#attributes' => $attributes->toArray(),
-        ];
-      } else {
-        $red = $item->red;
-        $green = $item->green;
-        $blue = $item->blue;
-        $colorCode = 'rgb(' . $red . ' , ' . $green . ' , ' . $blue . ')';
-        $attributes = new Attribute();
-        $attributes->setAttribute('style', 'background-color: ' . $colorCode);
-        $elements[$delta] = [
-          '#type' => 'html_tag',
-          '#tag' => 'div',
-          '#value' => $colorCode,
+          '#value' => $color,
           '#attributes' => $attributes->toArray(),
         ];
       }
@@ -56,4 +40,5 @@ class RgbColorStaticBackgroundFormatter extends FormatterBase
 
     return $elements;
   }
+
 }
