@@ -1,0 +1,7 @@
+customblock.route :
+  path: /custom-welcome-page
+  defaults:
+    _controller: Drupal\customblock\Controller\CustomBlockController::customBlock
+    _title: Custom Page
+  requirements:
+    _permission: 'access content'

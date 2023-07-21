@@ -19,6 +19,7 @@ dependencies:
     - layout_builder
     - node
     - path
+    - routing
     - system
     - taxonomy
     - toolbar
@@ -53,6 +54,7 @@ permissions:
   - 'delete recipe revisions'
   - 'delete terms in recipe_category'
   - 'delete terms in tags'
+  - 'dynamic permission 2'
   - 'edit own article content'
   - 'edit own page content'
   - 'edit own recipe content'

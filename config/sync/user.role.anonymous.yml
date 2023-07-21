@@ -8,7 +8,7 @@ dependencies:
     - contact
     - filter
     - media
-    - routingsystem
+    - routing
     - search
     - system
 _core:
@@ -20,7 +20,8 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access site-wide contact form'
-  - routingsystem.permission
+  - 'dynamic permission 2'
+  - 'dynamic permission 4'
   - 'search content'
   - 'use text format restricted_html'
   - 'view media'

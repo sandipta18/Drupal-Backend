@@ -1,0 +1,6 @@
+name: Color Field
+type: module
+description: 'Create a custom field type to accept RGB color and create custom
+field widget and custom field formatter for it'
+package: Custom Module
+core_version_requirement: ^9 || ^10

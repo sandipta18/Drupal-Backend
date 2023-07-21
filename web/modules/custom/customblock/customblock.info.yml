@@ -1,0 +1,9 @@
+name: Custom Block
+type: module
+package: Custom Module
+core_version_requirement: 10.x
+description: 'Custom Block Tutorial'
+
+dependencies:
+  - drupal:block
+  - drupal:user
