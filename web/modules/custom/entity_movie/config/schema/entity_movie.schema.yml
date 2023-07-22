@@ -1,0 +1,14 @@
+entity_movie.movie_configuration.*:
+  type: config_entity
+  label: Movie Configuration
+  mapping:
+    id:
+      type: string
+      label: ID
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+    description:
+      type: string

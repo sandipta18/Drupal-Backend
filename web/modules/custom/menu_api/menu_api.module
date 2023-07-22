@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * This module helps displaying budget related information.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Get the budget value from the configuration settings.
+ *
+ * @return int|null
+ *   The budget value if it is set; otherwise, null.
+ */
+function menu_api_get_budget() {
+  $config = \Drupal::config('menu_api.settings');
+  return $config->get('budget');
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function menu_api_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Check if the content type is 'article'.
+  if ($entity->bundle() === 'movie_info') {
+    // Get the budget value from the configuration settings.
+    $budget = menu_api_get_budget();
+    $price = $entity->get('movie_price')->getValue()[0]['value'];
+    if ($budget > $price) {
+
+      $message = t('The movie is under budget');
+    }
+    elseif ($budget < $price) {
+
+      $message = t('The movie is over budget');
+    }
+    else {
+
+      $message = t('The movie is within budget');
+    }
+
+    // Appending the message value.
+    $build['budget_display'] = [
+      '#markup' => '<div class="budget-display">Budget: ' . $message . '</div>',
+    ];
+  }
+
+}

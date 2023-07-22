@@ -1,5 +1,5 @@
-uuid: 0c2418e3-2ce2-44f3-a85f-675b9ea86812
-langcode: en
+uuid: b47f21bd-42ec-47e9-b75a-50de1a8e85c7
+langcode: en-gb
 status: true
 dependencies:
   config:
@@ -25,8 +25,8 @@ content:
     type: image
     label: hidden
     settings:
-      image_style: scale_crop_7_3_large
       image_link: ''
+      image_style: scale_crop_7_3_large
       image_loading:
         attribute: lazy
     third_party_settings: {  }

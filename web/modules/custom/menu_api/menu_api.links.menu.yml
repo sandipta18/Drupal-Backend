@@ -1,0 +1,6 @@
+menu_api.movie:
+  title: Movie Custom Form
+  description: Link to movie Custom Form
+  route_name: menu_api.movie
+  parent: system.admin
+  weight: 7

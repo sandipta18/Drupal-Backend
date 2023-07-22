@@ -1,0 +1,5 @@
+name: menu_api
+type: module
+description: Create a menu for the form and it will be placed beside Reports.
+package: Custom Module
+core_version_requirement: ^10

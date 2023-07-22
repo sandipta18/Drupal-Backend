@@ -1,0 +1,20 @@
+# field.field.node.car_brand.field_price.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price
+    - node.type.movie_info
+id: node.movie_info.field_price
+field_name: movie_price
+entity_type: node
+bundle: movie_info
+label: 'Price'
+description: 'Price of the Movie'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: decimal
