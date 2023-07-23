@@ -1,0 +1,35 @@
+uuid: a803dfec-149e-4b69-a11c-afaa398d7b7a
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.movie_info.body
+    - field.field.node.movie_info.movie_image
+    - field.field.node.movie_info.movie_price
+    - node.type.movie_info
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: 1IzbmP4rKSZsjjCtTimk_9V_io0i7OIYlpjZ8S32EnM
+id: node.movie_info.teaser
+targetEntityType: node
+bundle: movie_info
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  langcode: true
+  movie_image: true
+  movie_price: true

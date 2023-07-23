@@ -1,0 +1,22 @@
+# field.field.node.movie_info.body.yml
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.body
+        - node.type.movie_info
+    module:
+        - text
+id: node.movie_info.body
+field_name: body
+entity_type: node
+bundle: movie_info
+label: Body
+description: 'More specific information about the Movies.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: true
+field_type: text_with_summary

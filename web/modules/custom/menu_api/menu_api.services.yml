@@ -1,0 +1,6 @@
+services:
+  menu_api.event_subscriber:
+    class: Drupal\menu_api\EventSubscriber\MenuApiEventSubscriber
+    arguments: ['@entity_type.manager', '@current_route_match', '@messenger', '@config.factory']
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,31 @@
+entity.movie_configuration.collection:
+  path: '/admin/structure/movie-configuration'
+  defaults:
+    _entity_list: 'movie_configuration'
+    _title: 'Movie Configuration configuration'
+  requirements:
+    _permission: 'administer movie_configuration'
+
+entity.movie_configuration.add_form:
+  path: '/admin/structure/movie_configuration/add'
+  defaults:
+    _entity_form: 'movie_configuration.add'
+    _title: 'Add a movie configuration'
+  requirements:
+    _permission: 'administer movie_configuration'
+
+entity.movie_configuration.edit_form:
+  path: '/admin/structure/movie-configuration/{movie_configuration}'
+  defaults:
+    _entity_form: 'movie_configuration.edit'
+    _title: 'Edit a movie configuration'
+  requirements:
+    _permission: 'administer movie_configuration'
+
+entity.movie_configuration.delete_form:
+  path: '/admin/structure/movie-configuration/{movie_configuration}/delete'
+  defaults:
+    _entity_form: 'movie_configuration.delete'
+    _title: 'Delete a movie configuration'
+  requirements:
+    _permission: 'administer movie_configuration'
