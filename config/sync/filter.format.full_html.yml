@@ -1,5 +1,5 @@
-uuid: 0cdeccdd-ac88-4fd8-99cf-d6adcdcd0224
-langcode: en
+uuid: 3a6c5db6-fcef-4b98-b5c8-0302146129cd
+langcode: en-gb
 status: true
 dependencies:
   config:
@@ -8,7 +8,7 @@ dependencies:
     - editor
     - media
 _core:
-  default_config_hash: FlJ0Gmd21ZlGrou4dSu-EemZdQ7lApDvT33I9hbBCQc
+  default_config_hash: bIBAFGPKhiVXB2JK30BquxYB9-eYxuDSHF-fpHHN71s
 name: 'Full HTML'
 format: full_html
 weight: 2
@@ -30,6 +30,12 @@ filters:
     provider: filter
     status: true
     weight: 10
+    settings: {  }
+  filter_image_lazy_load:
+    id: filter_image_lazy_load
+    provider: filter
+    status: true
+    weight: 15
     settings: {  }
   editor_file_reference:
     id: editor_file_reference
@@ -56,5 +62,8 @@ filters:
       allowed_view_modes:
         responsive_3x2: responsive_3x2
       allowed_media_types:
+        audio: audio
+        document: document
         image: image
         remote_video: remote_video
+        video: video

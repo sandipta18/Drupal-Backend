@@ -1,0 +1,7 @@
+menu_api.movie:
+  path: '/admin/config/system/movie'
+  defaults:
+    _title: 'Movie Budget Form'
+    _form: 'Drupal\menu_api\Form\MovieForm'
+  requirements:
+    _permission: 'administer site configuration'
