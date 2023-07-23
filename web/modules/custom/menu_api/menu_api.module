@@ -23,7 +23,7 @@ function menu_api_get_budget() {
  * Implements hook_entity_view().
  */
 function menu_api_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  // Check if the content type is 'article'.
+  // Check if the content type is 'movie_info'.
   if ($entity->bundle() === 'movie_info') {
     // Get the budget value from the configuration settings.
     $budget = menu_api_get_budget();
