@@ -1,8 +1,12 @@
 _core:
-  default_config_hash: sxwl13r7jGR5hoWfGL1hlw3kgO6rVB_bA94CplPi8cE
+  default_config_hash: AhAqHKq-e2qITAcDTZOsy_rClFDOd21hchkrX6_ltyA
 name: 'Bruce Wayne'
 phone_number: '6940842007'
 email: batman@wayneenterprise.com
 gender: male
 subscription: 'yes'
 subscription_message: ''
+allowed_domains:
+  - gmail
+  - yahoo
+  - outlook

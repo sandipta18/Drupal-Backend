@@ -1,4 +1,4 @@
-custom permission:
+view_form_permission:
   title: 'Custom Permission'
-  description: 'Display Username'
+  description: 'View the form'
   restrict access: True

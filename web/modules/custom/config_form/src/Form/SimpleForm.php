@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\configform\Form;
+namespace Drupal\config_form\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class SimpleForm extends FormBase {
 
   /**
-   * Instance of MessengerInterface .
+   * MessengerService .
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\configform\Form;
+namespace Drupal\config_form\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CssCommand;
@@ -56,7 +56,7 @@ class ConfigForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'configform.settings',
+      'config_form.settings',
     ];
   }
 
@@ -65,7 +65,7 @@ class ConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormFormStateInterface $form_state) {
     // Get the configuration values from the YAML file.
-    $config = $this->config('configform.settings');
+    $config = $this->config('config_form.settings');
     $config_values = $config->get();
 
     $form['error'] = [
@@ -191,7 +191,7 @@ class ConfigForm extends ConfigFormBase {
   public function validate(FormFormStateInterface $form_state) {
     $phone_number = $form_state->getValue('phone_number');
     $email = $form_state->getValue('email');
-    $config = $this->config('configform.settings');
+    $config = $this->config('config_form.settings');
     $config_values = $config->get();
     $allowed_domains = $config_values['allowed_domains'];
     // Exploding the array so now we have the data in this format
@@ -237,7 +237,7 @@ class ConfigForm extends ConfigFormBase {
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('configform.settings');
+    $config = $this->config('config_form.settings');
     $config->set('name', $form_state->getValue('full_name'));
     $config->set('phone_number', $form_state->getValue('phone_number'));
     $config->set('email', $form_state->getValue('email'));
