@@ -1,0 +1,16 @@
+uuid: 8f674078-c2ae-46ef-a4f1-6cd0f54c2064
+langcode: en-gb
+status: true
+dependencies:
+  enforced:
+    module:
+      - database_api
+_core:
+  default_config_hash: yMF138fnWGr1smNq0YNNTIKdMhqKVUrEoC2C3QyWIWU
+name: Events
+type: event
+description: 'Content type that can be used to provide additional information on <em>Events</em>'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true
