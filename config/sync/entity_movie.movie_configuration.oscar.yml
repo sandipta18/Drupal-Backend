@@ -1,0 +1,11 @@
+uuid: d4ed75fc-d170-4bf8-ae85-a2940bf74ee8
+langcode: en-gb
+status: null
+dependencies: {  }
+id: oscar
+label: Oscar
+description: null
+year: '2023'
+movie:
+  -
+    target_id: '37'

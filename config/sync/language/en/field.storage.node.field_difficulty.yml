@@ -1,8 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: Easy
-    -
-      label: Medium
-    -
-      label: Hard

@@ -3,6 +3,7 @@ _core:
 langcode: en-gb
 module:
   admin_toolbar: 0
+  admin_toolbar_tools: 0
   automated_cron: 0
   big_pipe: 0
   block: 0
@@ -40,6 +41,7 @@ module:
   menu_link_content: 0
   menu_ui: 0
   mix: 0
+  multiple_fields_remove_button: 0
   mysql: 0
   node: 0
   options: 0
