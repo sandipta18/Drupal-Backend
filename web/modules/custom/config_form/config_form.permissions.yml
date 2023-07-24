@@ -1,4 +1,0 @@
-view_form_permission:
-  title: 'Custom Permission'
-  description: 'View the form'
-  restrict access: True
