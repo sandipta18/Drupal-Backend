@@ -4,4 +4,4 @@ menu_api.movie:
     _title: 'Movie Budget Form'
     _form: 'Drupal\menu_api\Form\MovieForm'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'administer menu_api configuration'

@@ -4,5 +4,5 @@ menu_api.settings:
   label: 'menu_api settings'
   mapping:
     budget:
-      type:  integet
+      type:  integer
       label: 'Budget'

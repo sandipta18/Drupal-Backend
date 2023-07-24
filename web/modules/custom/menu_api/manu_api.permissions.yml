@@ -1,0 +1,4 @@
+administer menu_api configuration:
+  title: 'Administer menu_api configuration'
+  description: 'View Content'
+  restric access: TRUE
