@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * This file sends data to be displayed in the twig file.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function database_api_theme($existing, $type, $theme, $path) {
+  return [
+    'custom-theme' => [
+      'variables' => [
+        'events_per_year' => [],
+        'events_per_quarter' => [],
+        'events_type' => [],
+      ],
+      'template' => 'custom-theme',
+    ],
+  ];
+}

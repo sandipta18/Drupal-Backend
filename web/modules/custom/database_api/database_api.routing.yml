@@ -1,0 +1,7 @@
+database_api.dashboard:
+  path: '/dashboard'
+  defaults:
+    _title: 'Dashboard'
+    _controller: '\Drupal\database_api\Controller\DatabaseApiController::build'
+  requirements:
+    _permission: 'access content'

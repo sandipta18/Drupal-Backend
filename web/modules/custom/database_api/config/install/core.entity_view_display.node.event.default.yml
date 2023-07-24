@@ -1,0 +1,26 @@
+# core.entity_view_display.node.event.default.yml
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.field.node.event.body
+        - field.field.node.event.field_date
+        - field.field.node.event.field_type
+        - node.type.event
+    module:
+        - text
+        - user
+id: node.event.default
+targetEntityType: node
+bundle: event
+mode: default
+content:
+    body:
+        label: hidden
+        type: text_default
+        weight: 101
+        settings: {  }
+        third_party_settings: {  }
+    links:
+        weight: 100
+hidden: {  }

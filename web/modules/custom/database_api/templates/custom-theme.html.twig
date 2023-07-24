@@ -1,0 +1,32 @@
+<h2>Events per Year:</h2>
+<ul>
+	{% for event in events_per_year %}
+		<li>Year:
+			{{ event.year }}, Event Date:
+			{{ event.event_date_value }}, Event Count:
+			{{ event.event_count }}</li>
+	{% endfor %}
+</ul>
+
+<h2>Events per Quarter:</h2>
+<ul>
+	{% for event in events_per_quarter %}
+		<li>Quarter:
+			{{ event.quarter }}, Event Date:
+			{{ event.event_date_value }}, Event Count:
+			{{ event.event_count }}</li>
+	{% endfor %}
+</ul>
+
+<h2>Events Type:</h2>
+<ul>
+	{% for event in events_type %}
+		<li>Type:
+			{{ event.field_event_type_value }}, Count:
+			{{ event.count }}</li>
+	{% endfor %}
+</ul>
+
+
+
+{# {{dump(events_per_year)}} #}
