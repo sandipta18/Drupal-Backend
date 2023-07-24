@@ -1,14 +1,13 @@
 <?php
 
-namespace Drupal\routingsystem\Controller;
+namespace Drupal\routing_system\Controller;
 
-use Drupal\Core\Controller\ControllerBase as ControllerControllerBase;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Controller\ControllerBase;
 
 /**
  * Controller for page route.
  */
-class MultidataRoute extends ControllerControllerBase {
+class MultidataRouteController extends ControllerBase {
 
   /**
    * Returns the overview page.

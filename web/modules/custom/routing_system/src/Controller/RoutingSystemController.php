@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\routingsystem\Controller;
+namespace Drupal\routing_system\Controller;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Controller for page route.
  */
-class RoutingSystem extends ControllerBase {
+class RoutingSystemController extends ControllerBase {
 
   /**
    * Class property for current user.
@@ -46,11 +46,11 @@ class RoutingSystem extends ControllerBase {
    */
   public function homeRoute() {
     // Fetching the user name of the currently.
-    $userName = $this->account->getDisplayName();
+    $user_name = $this->account->getDisplayName();
     return [
       '#type'   => 'markup',
       '#markup' => $this->t('Hello @user', [
-        '@user' => $userName,
+        '@user' => $user_name,
       ]),
     ];
   }
@@ -63,8 +63,9 @@ class RoutingSystem extends ControllerBase {
    *   Instance of the access result class.
    */
   public function customAccess() {
-    return ($this->account->hasPermission('routingsystem.permission')) ?
-    AccessResult::allowed() : AccessResult::forbidden();
+    return $this->account->hasPermission('routingsystem.permission')
+    ? AccessResult::allowed()
+    : AccessResult::forbidden();
   }
 
 }
