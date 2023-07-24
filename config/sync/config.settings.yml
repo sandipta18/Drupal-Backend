@@ -1,10 +1,6 @@
-custom:
-  name: sandipta
-  email: null
-  number: '9432406679'
-  gender: '0'
-Name: null
-'Phone Number': '8583942894'
-Email: sandipta.sardar@gmail.com
-Gender: male
-Subscription: "I don't feel like"
+name: 'Bruce Wayne'
+phone_number: '8583942894'
+email: sandiptasardar77@gmail.com
+gender: male
+subscription: 'no'
+subscription_message: 'I am vengeance'
