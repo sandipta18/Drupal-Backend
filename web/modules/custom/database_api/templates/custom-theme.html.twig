@@ -1,32 +1,48 @@
-<h2>Events per Year:</h2>
-<ul>
-	{% for event in events_per_year %}
-		<li>Year:
-			{{ event.year }}, Event Date:
-			{{ event.event_date_value }}, Event Count:
-			{{ event.event_count }}</li>
-	{% endfor %}
-</ul>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Event Data Tables</title>
+	</head>
+	<body>
+		<h2>Events per Year:</h2>
+		<table>
+			<tr>
+				<th>Year</th>
+				<th>Event Count</th>
+			</tr>
+			{% for event in events_per_year %}
+				<tr>
+					<td>{{ event.year }}</td>
+					<td>{{ event.event_count }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+		<h2>Events per Quarter:</h2>
+		<table>
+			<tr>
+				<th>Quarter</th>
+				<th>Event Count</th>
+			</tr>
+			{% for event in events_per_quarter %}
+				<tr>
+					<td>{{ event.quarter }}</td>
+					<td>{{ event.event_count }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+		<h2>Events Type:</h2>
+		<table>
+			<tr>
+				<th>Type</th>
+				<th>Count</th>
+			</tr>
+			{% for event in events_type %}
+				<tr>
+					<td>{{ event.field_event_type_value }}</td>
+					<td>{{ event.count }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
 
-<h2>Events per Quarter:</h2>
-<ul>
-	{% for event in events_per_quarter %}
-		<li>Quarter:
-			{{ event.quarter }}, Event Date:
-			{{ event.event_date_value }}, Event Count:
-			{{ event.event_count }}</li>
-	{% endfor %}
-</ul>
-
-<h2>Events Type:</h2>
-<ul>
-	{% for event in events_type %}
-		<li>Type:
-			{{ event.field_event_type_value }}, Count:
-			{{ event.count }}</li>
-	{% endfor %}
-</ul>
-
-
-
-{# {{dump(events_per_year)}} #}

@@ -43,19 +43,29 @@ class DatabaseApiController extends ControllerBase {
    *   Returns result in an associative array format.
    */
   public function getEventsYearly() {
-    $data = [];
     try {
       $query = $this->connection->select('node__event_date', 'Year')
-        ->fields('Year', ['event_date_value'])
-        ->groupBy('(event_date_value)')
-        ->orderBy('(event_date_value)');
-      $query->addExpression('YEAR(event_date_value)', 'year');
-      $query->addExpression('COUNT(*)', 'event_count');
+        ->fields('Year', ['event_date_value']);
       $results = $query->execute()->fetchAll();
-      return $results;
+      // Group events by the year part of 'event_date_value'.
+      $groupedResults = [];
+      foreach ($results as $result) {
+        $year = date('Y', strtotime($result->event_date_value));
+        $groupedResults[$year][] = $result;
+      }
+      // Calculate the event count for each year.
+      $output = [];
+      foreach ($groupedResults as $year => $events) {
+        $eventCount = count($events);
+        $output[] = [
+          'year' => $year,
+          'event_count' => $eventCount,
+        ];
+      }
+      return $output;
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError(t('Unable to save data'));
+      \Drupal::messenger()->addError(t('Error loading'));
     }
   }
 
@@ -68,16 +78,27 @@ class DatabaseApiController extends ControllerBase {
   public function getEventsQuarterly() {
     try {
       $query = $this->connection->select('node__event_date', 'Year')
-        ->fields('Year', ['event_date_value'])
-        ->groupBy('(event_date_value)')
-        ->orderBy('(event_date_value)');
-      $query->addExpression('QUARTER(event_date_value)', 'quarter');
-      $query->addExpression('COUNT(*)', 'event_count');
+        ->fields('Year', ['event_date_value']);
       $results = $query->execute()->fetchAll();
-      return $results;
+      // Group events by the quarter of the year.
+      $groupedResults = [];
+      foreach ($results as $result) {
+        $quarter = ceil(date('n', strtotime($result->event_date_value)) / 3);
+        $groupedResults[$quarter][] = $result;
+      }
+      // Calculate the event count for each quarter.
+      $output = [];
+      foreach ($groupedResults as $quarter => $events) {
+        $eventCount = count($events);
+        $output[] = [
+          'quarter' => $quarter,
+          'event_count' => $eventCount,
+        ];
+      }
+      return $output;
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError(t('Unable to save data'));
+      \Drupal::messenger()->addError(t('Error loading'));
     }
   }
 
@@ -98,7 +119,7 @@ class DatabaseApiController extends ControllerBase {
       return $results;
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError(t('Unable to save data'));
+      \Drupal::messenger()->addError(t('Error loading'));
     }
   }
 
@@ -112,12 +133,15 @@ class DatabaseApiController extends ControllerBase {
     $events_per_year = $this->getEventsYearly();
     $events_per_quarter = $this->getEventsQuarterly();
     $events_type = $this->getEventsType();
-    // dd($events_per_year);
+    $cache_tag = ['node_list:event'];
     return [
       '#theme' => 'custom-theme',
       '#events_per_year' => $events_per_year,
       '#events_per_quarter' => $events_per_quarter,
       '#events_type' => $events_type,
+      '#cache' => [
+        'tags' => $cache_tag,
+      ],
       '#attached' => [
         'library' => [
           'database_api/custom_theme',
