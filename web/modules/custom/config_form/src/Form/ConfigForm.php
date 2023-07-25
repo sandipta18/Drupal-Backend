@@ -200,33 +200,40 @@ class ConfigForm extends ConfigFormBase {
     // Pop function removes the last element from an array.
     $domain = array_pop($parts);
     $error_message = '';
-    switch (true) {
+    switch (TRUE) {
       case (!filter_var($email, FILTER_VALIDATE_EMAIL)):
         $error_message = 'Invalid Email Format';
         break;
+
       case (!in_array($domain, $allowed_domains)):
         $error_message = 'Email ID should belong to gmail, yahoo or outlook';
         break;
+
       case (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $phone_number) or strlen($phone_number) > 10):
         $error_message = 'Invalid Phone Number';
         break;
+
       case (empty($form_state->getValue('full_name'))):
         $error_message = 'Name should not be empty';
         break;
+
       case (empty($form_state->getValue('gender'))):
         $error_message = 'Gender should not be empty';
         break;
+
       case (empty($form_state->getValue('subscribe'))):
         $error_message = 'Please mention whether you want to subscribe or not';
         break;
+
       case ($form_state->getValue('subscribe') === 'no' && empty($form_state->getValue('subscribe_message'))):
         $error_message = 'Get updates over email?';
         break;
+
       default:
         return TRUE;
     }
     if ($error_message) {
-      return $this->t($error_message);
+      return $error_message;
     }
   }
 
