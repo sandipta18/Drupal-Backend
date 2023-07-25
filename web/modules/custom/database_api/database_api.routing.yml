@@ -5,3 +5,11 @@ database_api.dashboard:
     _controller: '\Drupal\database_api\Controller\DatabaseApiController::build'
   requirements:
     _permission: 'access content'
+
+database_api.settings:
+  path: '/admin/config/system/settings'
+  defaults:
+    _title: 'View Term Details'
+    _form: 'Drupal\database_api\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'
