@@ -5,6 +5,6 @@ gender: 'male'
 subscription: 'yes'
 subscription_message: ''
 allowed_domains:
-  - "gmail"
-  - "yahoo"
-  - "outlook"
+  - "gmail.com"
+  - "yahoo.com"
+  - "outlook.com"

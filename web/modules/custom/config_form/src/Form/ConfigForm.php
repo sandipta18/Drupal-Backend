@@ -7,9 +7,8 @@ use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Form\FormStateInterface as FormFormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface as DependencyInjectionContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Config form to take user information .
@@ -38,7 +37,7 @@ class ConfigForm extends ConfigFormBase {
   /**
    * {@inheritDoc}
    */
-  public static function create(DependencyInjectionContainerInterface $container) {
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('messenger')
     );
@@ -63,7 +62,7 @@ class ConfigForm extends ConfigFormBase {
   /**
    * {@inheritDoc}
    */
-  public function buildForm(array $form, FormFormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     // Get the configuration values from the YAML file.
     $config = $this->config('config_form.settings');
     $config_values = $config->get();
@@ -143,7 +142,7 @@ class ConfigForm extends ConfigFormBase {
   /**
    * {@inheritDoc}
    */
-  public function validateForm(array &$form, FormFormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state) {
     $this->messenger()->addMessage($this->validate($form_state));
   }
 
@@ -158,10 +157,10 @@ class ConfigForm extends ConfigFormBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   Ajax response based on the validation.
    */
-  public function submitDataAjax(array &$form, FormFormStateInterface $form_state) {
+  public function submitDataAjax(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
     $output = $this->validate($form_state);
-    if ($output) {
+    if ($output === TRUE) {
       // If validation is succesful showing the success message.
       $message = $this->t('Thanks for submitting the form');
       $ajax_response->addCommand(new CssCommand('.success', ['color' => 'green']));
@@ -188,7 +187,7 @@ class ConfigForm extends ConfigFormBase {
    *   On succesful validation return boolean value
    *   else return error message.
    */
-  public function validate(FormFormStateInterface $form_state) {
+  public function validate(FormStateInterface $form_state) {
     $phone_number = $form_state->getValue('phone_number');
     $email = $form_state->getValue('email');
     $config = $this->config('config_form.settings');
@@ -200,37 +199,35 @@ class ConfigForm extends ConfigFormBase {
     $parts = explode('@', $email);
     // Pop function removes the last element from an array.
     $domain = array_pop($parts);
-    // Validating based on conditions.
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-      return $this->t('Invalid Email Format');
+    $error_message = '';
+    switch (true) {
+      case (!filter_var($email, FILTER_VALIDATE_EMAIL)):
+        $error_message = 'Invalid Email Format';
+        break;
+      case (!in_array($domain, $allowed_domains)):
+        $error_message = 'Email ID should belong to gmail, yahoo or outlook';
+        break;
+      case (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $phone_number) or strlen($phone_number) > 10):
+        $error_message = 'Invalid Phone Number';
+        break;
+      case (empty($form_state->getValue('full_name'))):
+        $error_message = 'Name should not be empty';
+        break;
+      case (empty($form_state->getValue('gender'))):
+        $error_message = 'Gender should not be empty';
+        break;
+      case (empty($form_state->getValue('subscribe'))):
+        $error_message = 'Please mention whether you want to subscribe or not';
+        break;
+      case ($form_state->getValue('subscribe') === 'no' && empty($form_state->getValue('subscribe_message'))):
+        $error_message = 'Get updates over email?';
+        break;
+      default:
+        return TRUE;
     }
-    elseif (!in_array($domain, $allowed_domains)) {
-
-      return $this->t('Email ID should belong to gmail, yahoo or outlook');
+    if ($error_message) {
+      return $this->t($error_message);
     }
-    elseif (!preg_match("/^[+]?[1-9][0-9]{9,14}$/", $phone_number) or strlen($phone_number) > 10) {
-
-      return $this->t('Invalid Phone Number');
-    }
-    elseif (empty($form_state->getValue('full_name'))) {
-
-      return $this->t('Gender should not be empty');
-    }
-    elseif (empty($form_state->getValue('gender'))) {
-
-      return $this->t('Gender should not be empty');
-    }
-    elseif (empty($form_state->getValue('subscribe'))) {
-
-      return $this->t('Please mention whether you want to subscribe or not');
-    }
-    $subscribe_value = $form_state->getValue('subscribe');
-    if ($subscribe_value === 'no' && empty($form_state->getValue('subscribe_message'))) {
-      return $this->t('Get updates over email?');
-    }
-
-    return TRUE;
   }
 
   /**
