@@ -21,6 +21,18 @@ content:
         weight: 101
         settings: {  }
         third_party_settings: {  }
+    movie_price:
+        label: hidden
+        type: number
+        weight: 102
+        settings: {  }
+        third_party_settings: {  }
+    movie_image:
+        label: hidden
+        type: image_image
+        weight: 102
+        settings: {  }
+        third_party_settings: {  }
     links:
         weight: 100
 hidden: {  }
