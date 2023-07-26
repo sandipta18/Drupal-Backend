@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Implementing hook to restric access.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function menu_api_install() {
+  $role = Role::load('content_editor');
+  $role->grantPermission('administer menu_api configuration')->save();
+}

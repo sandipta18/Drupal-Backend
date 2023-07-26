@@ -1,7 +1,7 @@
 _core:
   default_config_hash: VDJxTZtQR21qB4lvOq8zszJZLvLKrSPQpdn2E3T71Ww
-langcode: en
-uuid: d60b719d-9d16-4161-a25c-186143b1c719
+langcode: en-gb
+uuid: 0c7fd505-36d5-4487-af18-2724f4044fc1
 name: Backend
 mail: sandiptasardar99@gmail.com
 slogan: ''
@@ -11,4 +11,4 @@ page:
   front: /node
 admin_compact_mode: false
 weight_select_max: 100
-default_langcode: en
+default_langcode: en-gb

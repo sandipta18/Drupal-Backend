@@ -1,0 +1,116 @@
+uuid: e2820939-cac3-4959-a34e-dbb49995f7f2
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.node.movie_info.body
+    - field.field.node.movie_info.movie_image
+    - field.field.node.movie_info.movie_price
+    - image.style.thumbnail
+    - node.type.movie_info
+  module:
+    - content_moderation
+    - image
+    - path
+    - text
+_core:
+  default_config_hash: Lq5lnn2ULXL3cK4Xo2OtAEWYIXiekSAzww24eGXuq-0
+id: node.movie_info.default
+targetEntityType: node
+bundle: movie_info
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 8
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+    label: hidden
+  created:
+    type: datetime_timestamp
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  links:
+    weight: 100
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  movie_image:
+    type: image_image
+    weight: 10
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  movie_price:
+    type: number
+    weight: 11
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 9
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

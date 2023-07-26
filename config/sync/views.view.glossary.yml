@@ -1,5 +1,5 @@
-uuid: ccbd6279-e3f3-4215-8cf4-f4d8be970d55
-langcode: en
+uuid: feba015c-c51b-4544-b362-5fe18dc6398a
+langcode: en-gb
 status: false
 dependencies:
   config:
@@ -8,7 +8,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: sz_FoMz5aClG4jFy4UDlkenXQtgTUXohEDjWVBuHaro
+  default_config_hash: 0mU55pEUCMGcMhBRpyMqjal173jNwZh0hrvImj4HVWU
 id: glossary
 label: Glossary
 module: node
@@ -183,6 +183,15 @@ display:
             date_format: long
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: long
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
       pager:
         type: mini
         options:

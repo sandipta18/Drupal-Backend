@@ -1,5 +1,5 @@
-uuid: 49dff1a1-e79b-47b8-a16a-38236969a308
-langcode: en
+uuid: eb1096ad-952b-48d9-ac81-73a84f9266c6
+langcode: en-gb
 status: true
 dependencies:
   config:
@@ -8,7 +8,7 @@ dependencies:
   module:
     - text
 _core:
-  default_config_hash: foetbaMhlB6uLc2bn-PESvaPkbuDWj0MEjpQVwQiP-o
+  default_config_hash: j00Gfs9AFqwK4x9RIsISLbPO7vA12psPR4s60wOIwQo
 id: block_content.basic.body
 field_name: body
 entity_type: block_content
@@ -22,4 +22,5 @@ default_value_callback: ''
 settings:
   display_summary: false
   required_summary: false
+  allowed_formats: {  }
 field_type: text_with_summary

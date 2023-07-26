@@ -1,0 +1,8 @@
+# Schema for the configuration files of the menu_api module.
+menu_api.settings:
+  type: config_object
+  label: 'menu_api settings'
+  mapping:
+    budget:
+      type:  integer
+      label: 'Budget'
