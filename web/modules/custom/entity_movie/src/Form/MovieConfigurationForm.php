@@ -17,7 +17,6 @@ class MovieConfigurationForm extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
-
     $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Award Name'),
@@ -34,7 +33,7 @@ class MovieConfigurationForm extends EntityForm {
       ],
       '#disabled' => !$this->entity->isNew(),
     ];
-    $id = $this->entity->get('movie')[0]['target_id'];
+    $id = $this->entity->get('movie')[0]['target_id'] ?? '';
     $form['movie'] = [
       '#type' => 'entity_autocomplete',
       '#title' => $this->t('Movie Name'),
@@ -43,7 +42,6 @@ class MovieConfigurationForm extends EntityForm {
       '#tags' => TRUE,
       '#size' => 30,
       '#maxlength' => 1024,
-    // Dependency injection.
       '#default_value' => $this->entityTypeManager->getStorage('node')->load($id),
       '#persist' => TRUE,
     ];
@@ -56,7 +54,7 @@ class MovieConfigurationForm extends EntityForm {
       '#required' => TRUE,
       '#persist' => TRUE,
     ];
-
+    
     return $form;
   }
 
