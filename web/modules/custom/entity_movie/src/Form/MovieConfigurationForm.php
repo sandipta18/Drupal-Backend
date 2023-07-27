@@ -42,7 +42,7 @@ class MovieConfigurationForm extends EntityForm {
       '#tags' => TRUE,
       '#size' => 30,
       '#maxlength' => 1024,
-      '#default_value' => $this->entityTypeManager->getStorage('node')->load($id),
+      '#default_value' => $this->entityTypeManager->getStorage('node')->load($id ?? ''),
       '#persist' => TRUE,
     ];
     $default_year = $this->entity->get('year');
@@ -54,7 +54,7 @@ class MovieConfigurationForm extends EntityForm {
       '#required' => TRUE,
       '#persist' => TRUE,
     ];
-    
+
     return $form;
   }
 
