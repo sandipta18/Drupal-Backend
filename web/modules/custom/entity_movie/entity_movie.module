@@ -5,8 +5,9 @@
  * Provides a movie entity type.
  */
 
-use Drupal\Core\Render\Element;
 use Drupal\user\UserInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_theme().
@@ -80,4 +81,16 @@ function entity_movie_user_predelete(UserInterface $account) {
     ->execute();
   $movies = $storage->loadMultiple($movie_ids);
   $storage->delete($movies);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_movie_form_movie_configuration_delete_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'movie_configuration_delete_form') {
+    unset($form['description']);
+    $form['message'] = [
+      '#markup' => '<div class="custom-message">' . t('Are you sure you want to delete the node?') . '</div>',
+    ];
+  }
 }

@@ -6,6 +6,6 @@ entity.movie_type.collection:
 
 entity.movie_configuration.overview:
   title: Movie Configurations
-  parent: system.admin_structure
+  parent: system.admin_config
   description: 'List of movie configurations to extend site functionality.'
   route_name: entity.movie_configuration.collection
