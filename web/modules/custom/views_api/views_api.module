@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * This file is used to change the views sorting.
+ */
+
+/**
+ * Implemets hook_api_views_query_alter().
+ */
+function views_api_views_query_alter($view, $query) {
+  if ($view->id() == 'practice') {
+    $query->orderby = [
+      [
+        'field' => 'title',
+        'direction' => 'ASC',
+      ],
+    ];
+  }
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function views_api_views_data_alter(&$data) {
+  // Expose the uid as a relationship to users.
+  $data['node_field_data']['user_relationship'] = [
+    'title' => t('User Relationship'),
+    'help' => t('Add a relationship to the user entity.'),
+    'relationship' => [
+      'base' => 'users_field_data',
+      'field' => 'uid',
+      'id' => 'standard',
+    ],
+  ];
+
+  // Add fields from the related user entity to be displayed in the view.
+  $data['users_field_data']['user_name'] = [
+    'title' => t('User Name'),
+    'help' => t('The username of the related user entity.'),
+    'relationship' => [
+      'id' => 'standard',
+      'field' => 'uid',
+      'label' => t('User Name'),
+    ],
+  ];
+
+  // Add fields from the node entity.
+  $data['node_field_data']['nid']['title'] = t('ID information of the content');
+  $data['node_field_data']['nid']['help'] = t('Provides node information');
+}
