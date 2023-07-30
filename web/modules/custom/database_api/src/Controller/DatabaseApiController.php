@@ -4,6 +4,7 @@ namespace Drupal\database_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -18,13 +19,24 @@ class DatabaseApiController extends ControllerBase {
   protected $connection;
 
   /**
+   * The Messenger Service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Initializes the database connection object.
    *
    * @param \Drupal\Core\Database\Connection $connection
    *   Database connection handler.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The Messenger Service.
    */
-  public function __construct(Connection $connection) {
+  public function __construct(Connection $connection,
+  MessengerInterface $messenger) {
     $this->connection = $connection;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -33,6 +45,7 @@ class DatabaseApiController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
+      $container->get('messenger'),
     );
   }
 
@@ -65,7 +78,7 @@ class DatabaseApiController extends ControllerBase {
       return $output;
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError(t('Error loading'));
+      $this->messenger->addError($this->t('Error loading'));
     }
   }
 
@@ -98,7 +111,7 @@ class DatabaseApiController extends ControllerBase {
       return $output;
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError(t('Error loading'));
+      $this->messenger->addError($this->t('Error loading'));
     }
   }
 
@@ -119,7 +132,7 @@ class DatabaseApiController extends ControllerBase {
       return $results;
     }
     catch (\Exception $e) {
-      \Drupal::messenger()->addError(t('Error loading'));
+      $this->messenger->addError($this->t('Error loading'));
     }
   }
 
