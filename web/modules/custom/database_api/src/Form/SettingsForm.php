@@ -105,26 +105,30 @@ class SettingsForm extends ConfigFormBase {
     $terms = $this->entityTypeManager
       ->getStorage('taxonomy_term')
       ->loadByProperties(['name' => $term_name]);
+
     if (!empty($terms)) {
-      // If there are multiple terms with the same name, get the first one.
-      $term = reset($terms);
-      $term_id = $term->id();
-      $term_uuid = $term->uuid();
-      $term_info = $this->entityTypeManager->getStorage('node')
-        ->loadByProperties(['field_tags' => $term_id]);
-      foreach ($term_info as $node) {
-        $term_name = $node->getTitle();
-        $term_url = $node->toUrl();
-        $term_url = Link::fromTextAndUrl($term_name, $term_url)->toString();
-      }
-      $output = [
-        $this->t('The ID of the Term: @id', ['@id' => $term_id]),
-        $this->t('UUID of the Term: @uuid', ['@uuid' => $term_uuid]),
-        $this->t('Node Title: @term_name', ['@term_name' => $term_name]),
-        $this->t('Node Url is : @term_url', ['@term_url' => $term_url]),
-      ];
-      foreach ($output as $data) {
-        $this->messenger->addMessage($data);
+      foreach ($terms as $term) {
+        $term_id = $term->id();
+        $term_uuid = $term->uuid();
+        $term_info = $this->entityTypeManager->getStorage('node')
+          ->loadByProperties(['field_tags' => $term_id]);
+
+        foreach ($term_info as $node) {
+          $term_name = $node->getTitle();
+          $term_url = $node->toUrl();
+          $term_url = Link::fromTextAndUrl($term_name, $term_url)->toString();
+
+          $output = [
+            $this->t('The ID of the Term: @id', ['@id' => $term_id]),
+            $this->t('UUID of the Term: @uuid', ['@uuid' => $term_uuid]),
+            $this->t('Node Title: @term_name', ['@term_name' => $term_name]),
+            $this->t('Node Url is : @term_url', ['@term_url' => $term_url]),
+          ];
+
+          foreach ($output as $data) {
+            $this->messenger->addMessage($data);
+          }
+        }
       }
       parent::submitForm($form, $form_state);
     }
