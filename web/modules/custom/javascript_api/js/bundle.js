@@ -10,7 +10,10 @@
             $phoneNumber = $phoneNumber.substring(0, 10);
           }
           if ($phoneNumber.length === 10) {
-            var $formattedPhoneNumber = '(' + $phoneNumber.substring(0, 3) + ') ' + $phoneNumber.substring(3, 6) + '-' + $phoneNumber.substring(6, 10);
+            // Changes the phone number format from xxxxxxxxxx to
+            // (xxx) xxx-xxxx
+            var $formattedPhoneNumber = '(' + $phoneNumber.substring(0, 3) + ') '
+            + $phoneNumber.substring(3, 6) + '-' + $phoneNumber.substring(6, 10);
             $fieldElement.val($formattedPhoneNumber);
           }
         });
