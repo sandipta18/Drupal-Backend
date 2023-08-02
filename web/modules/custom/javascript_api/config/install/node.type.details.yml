@@ -1,0 +1,20 @@
+langcode: en-gb
+status: true
+dependencies:
+  enforced:
+    module:
+      - javascript_api # This is the name of the module we're using for this example
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Details
+type: details
+description: 'Takes user name and number'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

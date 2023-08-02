@@ -1,0 +1,20 @@
+javascript_api_basic:
+  version: 1.x
+  js:
+    js/tutorial.js: {}
+
+javascript_api_sitewide:
+  version: 1.x
+  js:
+    js/sitewide.js: {}
+
+javascript_api_bundle:
+  version: 1.x
+  js:
+    js/bundle.js: {}
+
+javascript_api_css:
+  version: 1.x
+  css:
+    theme:
+      css/bundle.css: {}
