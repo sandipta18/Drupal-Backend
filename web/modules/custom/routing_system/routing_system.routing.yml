@@ -1,0 +1,18 @@
+routing_system.route :
+  path: '/route2'
+  defaults:
+    _controller: 'Drupal\routing_system\Controller\RoutingSystemController::homeRoute'
+    _title: 'Exploring Routing System'
+  requirements:
+    _permission: routing_system.permission
+    _role: administrator+editor
+    _custom_access: Drupal\routing_system\Controller\RoutingSystemController::customAccess
+
+campaign.route :
+  path: /campaign/value/{data}
+  defaults:
+    _controller: 'Drupal\routing_system\Controller\MultidataRouteController::multiRoute'
+    _title: 'Exploring Advanced Routing System'
+  requirements:
+    _permission: access content
+    data: ^[0-9]+$

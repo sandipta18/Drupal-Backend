@@ -55,6 +55,7 @@ module:
   phpass: 0
   responsive_image: 0
   routing: 0
+  routing_system: 
   search: 0
   shortcut: 0
   system: 0
