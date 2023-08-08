@@ -2,16 +2,45 @@
 
 namespace Drupal\menu_api\Form;
 
-use Drupal\Core\Ajax\AjaxResponse as AjaxAjaxResponse;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse as AjaxAjaxResponse;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure menu_api settings for this site.
  */
 class MovieForm extends ConfigFormBase {
+
+  /**
+   * Cache Tag Invalidator Service.
+   *
+   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
+   */
+  protected $cache_tags_invalidator;
+
+  /**
+   * Constructs a MovieForm Object.
+   *
+   * @param CacheTagsInvalidatorInterface $cache_tags_invalidator
+   *   Holds the CacheTagsInvalidatorInterface service.
+   */
+  public function __construct(CacheTagsInvalidatorInterface $cache_tags_invalidator) {
+    $this->cache_tags_invalidator = $cache_tags_invalidator;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('cache_tags.invalidator'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -114,6 +143,7 @@ class MovieForm extends ConfigFormBase {
     $this->config('menu_api.settings')
       ->set('budget', $form_state->getValue('budget'))
       ->save();
+    $this->cache_tags_invalidator->invalidateTags(['node_list']);
     parent::submitForm($form, $form_state);
   }
 
