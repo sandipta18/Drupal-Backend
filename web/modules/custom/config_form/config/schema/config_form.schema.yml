@@ -1,0 +1,27 @@
+# Schema for configuration files of the Configform module.
+config_form.settings:
+  type: config_object
+  mapping:
+    name:
+      type: string
+      label: 'Full Name'
+    phone_number:
+      type: integer
+      label: 'Phone Number'
+    email:
+      type: string
+      label: 'Email'
+    gender:
+      type: string
+      label: 'Gender'
+    subscription:
+      type: string
+      label: 'Subscription'
+    subscription_message:
+      type: string
+      label: 'Subscription Message'
+    allowed_domains:
+      type: array
+      label: 'Allowed Email Domains'
+      items:
+        type: string

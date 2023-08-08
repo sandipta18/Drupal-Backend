@@ -19,6 +19,7 @@ dependencies:
     - layout_builder
     - node
     - path
+    - routing
     - system
     - taxonomy
     - toolbar
@@ -47,12 +48,14 @@ permissions:
   - 'create url aliases'
   - 'delete article revisions'
   - 'delete own article content'
+  - 'delete own files'
   - 'delete own page content'
   - 'delete own recipe content'
   - 'delete page revisions'
   - 'delete recipe revisions'
   - 'delete terms in recipe_category'
   - 'delete terms in tags'
+  - 'dynamic permission 2'
   - 'edit own article content'
   - 'edit own page content'
   - 'edit own recipe content'

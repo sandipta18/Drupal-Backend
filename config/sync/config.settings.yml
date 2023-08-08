@@ -1,5 +1,6 @@
-custom:
-  name: sandipta
-  email: null
-  number: '9432406679123'
-  gender: '0'
+name: 'Bruce Wayne'
+phone_number: '8583942894'
+email: sandiptasardar77@gmail.com
+gender: male
+subscription: 'no'
+subscription_message: 'I am vengeance'
