@@ -16,17 +16,16 @@ module:
   config: 0
   config_split: 0
   config_translation: 0
-  configform: 0
+  config_form: 0
   contact: 0
   content_moderation: 0
   contextual: 0
-  customblock: 0
-  customhook: 0
   datetime: 0
   dblog: 0
   demo_umami: 0
   demo_umami_content: 0
   devel: 0
+  devel_entity_updates: 0
   devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
@@ -53,9 +52,9 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  phpass: 0
   responsive_image: 0
   routing: 0
-  routingsystem: 0
   search: 0
   shortcut: 0
   system: 0
@@ -64,10 +63,11 @@ module:
   token: 0
   toolbar: 0
   tour: 0
+  tracer: 0
   user: 0
   views_ui: 0
+  webprofiler: 0
   workflows: 0
-  yml_tutorial: 0
   pathauto: 1
   content_translation: 10
   views: 10

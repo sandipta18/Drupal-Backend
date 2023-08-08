@@ -1,0 +1,6 @@
+name: Form Tutorial
+type: module
+package: Custom Module
+description: Form Api Tutorial
+core_version_requirement: ^10
+configure: config_form.settings
