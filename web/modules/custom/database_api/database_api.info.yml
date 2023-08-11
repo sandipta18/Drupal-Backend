@@ -1,0 +1,6 @@
+name: database_api
+type: module
+description: Create a dashboard to display the following few things programmatically
+package: Custom Module
+core_version_requirement: ^10
+configure: database_api.settings

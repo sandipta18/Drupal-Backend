@@ -1,0 +1,22 @@
+# field.field.node.event.field_date.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date
+    - node.type.event
+  module:
+    - datetime
+id: node.event.field_date
+field_name: event_date
+entity_type: node
+bundle: event
+label: 'Date'
+description: 'Date of the event'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: datetime
