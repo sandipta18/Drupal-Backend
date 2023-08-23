@@ -1,0 +1,7 @@
+javascript_api.example:
+  path: '/javascript-api/tutorial'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\javascript_api\Controller\JavascriptApiController::build'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,15 @@
+name: javascript_api
+type: module
+description: Site wide implementation of javascript api
+package: Custom Module
+core_version_requirement: ^9 || ^10
+
+libraries:
+  javascript_api_sitewide:
+    version: 1.x
+    js:
+      js/sitewide.js: {}
+  javascript_api_bundle:
+    version: 1.x
+    js:
+      js/bundle.js: {}

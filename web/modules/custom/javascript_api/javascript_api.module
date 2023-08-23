@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Implements hook_page_attachments_alter().
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function javascript_api_page_attachments_alter(array &$attachments) {
+  // Attach the JavaScript file to all pages.
+  $attachments['#attached']['library'][] = 'javascript_api/javascript_api_sitewide';
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function javascript_api_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'node_details_form' || $form_id == 'node_details_edit_form') {
+    $form['#attached']['library'][] = 'javascript_api/javascript_api_bundle';
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function javascript_api_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  if ($node->getType() == 'details') {
+    $variables['#attached']['library'][] = 'javascript_api/javascript_api_bundle';
+    $variables['#attached']['library'][] = 'javascript_api/javascript_api_css';
+  }
+}
