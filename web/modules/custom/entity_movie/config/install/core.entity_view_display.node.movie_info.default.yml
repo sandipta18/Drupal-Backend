@@ -1,0 +1,38 @@
+# core.entity_view_display.node.movie_info.default.yml
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.field.node.movie_info.body
+        - field.field.node.movie_info.field_price
+        - field.field.node.movie_info.field_movie_image
+        - node.type.movie_info
+    module:
+        - text
+        - user
+id: node.movie_info.default
+targetEntityType: node
+bundle: movie_info
+mode: default
+content:
+    body:
+        label: hidden
+        type: text_default
+        weight: 101
+        settings: {  }
+        third_party_settings: {  }
+    movie_price:
+        label: hidden
+        type: number_decimal
+        weight: 102
+        settings: {  }
+        third_party_settings: {  }
+    movie_image:
+        label: hidden
+        type: image
+        weight: 103
+        settings: {  }
+        third_party_settings: {  }
+    links:
+        weight: 100
+hidden: {  }
